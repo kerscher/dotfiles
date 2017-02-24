@@ -1,5 +1,4 @@
 # Available commands
-
 execute_if_exists() {
     if hash $1 2>/dev/null; then
         $@
