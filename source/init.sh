@@ -143,8 +143,11 @@ if [ -t 1 ]; then
     # Keyboard navigation
     source ${DOTFILES}/directory-navigation.sh
     source ${DOTFILES}/keyboard-shortcuts.sh
-    export INPUTRC=${DOTFILES}/inputrc
-   
+    if [ ! -f ${HOME}/.inputrc ]; then
+        ln -s ${DOTFILES}/config/inputrc ${HOME}/.inputrc
+    fi
+    export INPUTRC=${HOME}/.inputrc
+    
     # Prompt
     source ${DOTFILES}/prompt.sh
 
