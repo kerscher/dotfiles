@@ -1,0 +1,18 @@
+# Based on https://github.com/koalaman/shellcheck/wiki/TravisCI
+
+language: bash
+
+sudo: false
+
+addons:
+  apt:
+    sources:
+    - debian-sid
+    packages:
+    - shellcheck
+
+script:
+ - bash -c 'shopt -s globstar; shellcheck **/*.{sh,bash}'
+
+matrix:
+  fast_finish: true
