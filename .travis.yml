@@ -1,18 +1,21 @@
 # Based on https://github.com/koalaman/shellcheck/wiki/TravisCI
 
+sudo: required
+
 language: bash
 
-sudo: false
+services:
+  - docker
 
-addons:
-  apt:
-    sources:
-    - debian-sid
-    packages:
-    - shellcheck
+before_install:
+  - docker pull koalaman/shellcheck
 
 script:
- - bash -c 'shopt -s globstar; shellcheck **/*.{sh,bash}'
+ - docker run -v $(pwd):/scripts koalaman/shellcheck /scripts/source/init.sh
+ - docker run -v $(pwd):/scripts koalaman/shellcheck /scripts/source/text_editor.sh
+ - docker run -v $(pwd):/scripts koalaman/shellcheck /scripts/source/keyboard-shortcuts.sh
+ - docker run -v $(pwd):/scripts koalaman/shellcheck /scripts/source/directory-navigation.sh
+ - docker run -v $(pwd):/scripts koalaman/shellcheck /scripts/source/prompt.sh
 
 matrix:
-  fast_finish: true
+fast_finish: true
