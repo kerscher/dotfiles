@@ -16,6 +16,3 @@ script:
  - docker run -v $(pwd):/scripts koalaman/shellcheck /scripts/source/keyboard-shortcuts.sh
  - docker run -v $(pwd):/scripts koalaman/shellcheck /scripts/source/directory-navigation.sh
  - docker run -v $(pwd):/scripts koalaman/shellcheck /scripts/source/prompt.sh
-
-matrix:
-fast_finish: true
