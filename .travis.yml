@@ -11,4 +11,4 @@ before_install:
   - docker pull koalaman/shellcheck
 
 script:
- - docker run -v $(pwd):/scripts koalaman/shellcheck -x source/init.sh source/keyboard-shortcuts.sh source/directory-navigation.sh source/text_editor.sh
+ - docker run -v $(pwd):/scripts koalaman/shellcheck -x /scripts/source/init.sh /scripts/source/text_editor.sh /scripts/source/keyboard-shortcuts.sh /scripts/source/directory-navigation.sh /scripts/source/prompt.sh

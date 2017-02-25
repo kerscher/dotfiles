@@ -129,7 +129,7 @@ if [ -t 1 ]; then
     [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
     
     # Text editor
-    # shellcheck source=source/text_editor.sh
+    # shellcheck source=/scripts/source/text_editor.sh
     . "${DOTFILES}/text_editor.sh"
     export EDITOR && EDITOR=$(text_editor)
     export VISUAL && VISUAL=$(text_editor)
@@ -145,9 +145,9 @@ if [ -t 1 ]; then
     fi
 
     # Keyboard navigation
-    # shellcheck source=source/directory-navigation.sh
+    # shellcheck source=/scripts/source/directory-navigation.sh
     . "${DOTFILES}/directory-navigation.sh"
-    # shellcheck source=source/keyboard-shortcuts.sh
+    # shellcheck source=/scripts/source/keyboard-shortcuts.sh
     . "${DOTFILES}/keyboard-shortcuts.sh"
     if [ ! -f "${HOME}/.inputrc" ]; then
         ln -s "${DOTFILES}/config/inputrc" "${HOME}/.inputrc"
@@ -155,7 +155,7 @@ if [ -t 1 ]; then
     export INPUTRC=${HOME}/.inputrc
     
     # Prompt
-    # shellcheck source=source/prompt.sh
+    # shellcheck source=/scripts/source/prompt.sh
     . "${DOTFILES}/prompt.sh"
 
     # Completions
