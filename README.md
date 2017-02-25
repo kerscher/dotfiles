@@ -2,6 +2,8 @@
 ----------
 
 [![Build Status](https://travis-ci.org/kerscher/dotfiles.svg?branch=master)](https://travis-ci.org/kerscher/dotfiles)
+![BSD3 license](https://img.shields.io/badge/license-BSD3-blue.svg)
+
 ![If you could only see this image…](images/the-other-guy-is-picking-his-nose.gif)
 
 ```shell
