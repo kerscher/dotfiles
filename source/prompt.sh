@@ -1,11 +1,13 @@
+#!/bin/bash
+
 parse_virtualenv () {
-    if [[ -n "$VIRTUAL_ENV" ]]; then
+    if [[ -n "${VIRTUAL_ENV}" ]]; then
         if hash basename 2>/dev/null; then
-            VIRTUALENV=$(basename "$VIRTUAL_ENV")
+            VIRTUALENV_NAME=$(basename "$VIRTUAL_ENV")
         else
-            VIRTUALENV="${VIRTUAL_ENV}"
+            VIRTUALENV_NAME="${VIRTUAL_ENV}"
         fi
-        echo "${VIRTUALENV} "
+        echo "${VIRTUALENV_NAME} "
     fi
 }
 
@@ -24,35 +26,35 @@ parse_os () {
 }
 
 # We only set the prompt on an interactive terminal
-if [ -t 1 ]; then 
+if [ -t 1 ]; then
     # How many colors do we have?
     TERM_COLOURS=$(tput colors)
 
-    if [ -n ${TERM_COLOURS} ] && [ ${TERM_COLOURS} -ge 8 ]; then   
+    if [ -n "${TERM_COLOURS}" ] && [ "${TERM_COLOURS}" -ge 8 ]; then
         # Typeface weight
         N="$(tput sgr0)" # Normal, or regular
         H="$(tput bold)" # Heavy, or bold
 
         # Typeface colour
         B=$(tput setaf 0) # Black
-        R=$(tput setaf 1) # Red
+        #R=$(tput setaf 1) # Red
         G=$(tput setaf 2) # Green
-        Y=$(tput setaf 3) # Yellow
+        #Y=$(tput setaf 3) # Yellow
         B=$(tput setaf 4) # Blue
         M=$(tput setaf 5) # Magenta
-        C=$(tput setaf 6) # Cyan
+        #C=$(tput setaf 6) # Cyan
         W=$(tput setaf 7) # White
 
         export PS1="\n\[${N}${B}\]\t \[${H}${B}\]\u \[${H}${B}\]@\[${H}${M}\] \h\[${H}${B}\] \`parse_os\`\[${N}${G}\]\`parse_virtualenv\`\[${N}${W}\]\w\n\$ \[${N}\]"
         unset B
-        unset R
+        #unset R
         unset G
-        unset Y
+        #unset Y
         unset B
         unset M
-        unset C
+        #unset C
         unset W
     else
-        export PS1="\n\t \u @ \h \`parse_os\`\`parse_virtualenv\`\w\n\$ "        
-    fi 
+        export PS1="\n\t \u @ \h \`parse_os\`\`parse_virtualenv\`\w\n\$ "
+    fi
 fi

@@ -1,7 +1,9 @@
+#!/bin/bash
+
 # Available commands
 execute_if_exists() {
-    if hash $1 2>/dev/null; then
-        $@
+    if hash "$1" 2>/dev/null; then
+        "$@"
     fi
 }
 
@@ -17,7 +19,7 @@ list_tree() {
     if hash tree 2>/dev/null; then
         tree --dirsfirst -C -L 2 "$@"
     elif hash exa 2>/dev/null; then
-        exa --tree --group-directories-first --level 2"$@"
+        exa --tree --group-directories-first --level 2 "$@"
     else
         ls                   \
             --recursive      \
@@ -71,7 +73,7 @@ list_all_files() {
 
 # Shortcuts
 ## Left hand
-alias a=$EDITOR # text editor
+alias a='${EDITOR}' # text editor
 
 alias o="monitor_processes"
 alias O="execute_if_exists ps ax"
@@ -86,8 +88,8 @@ alias i="list_files"  # list     files
 alias I="list_all_files" # list all files
 
 ## Right hand
-alias d="pushd $HOME" # go to the home directory
-alias f="popd $HOME"  # go to the home directory deleting the current one from it
+alias d='pushd ${HOME}' # go to the home directory
+alias f='popd ${HOME}'  # go to the home directory deleting the current one from it
 
 alias h="pushd +1" # go to last directory on history
 alias g="popd +1"  # go to last directory on history deleting the current one from it.

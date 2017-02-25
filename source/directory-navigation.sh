@@ -1,3 +1,5 @@
+#!/bin/bash
+
 change_directory() {
     if hash cdargs 2>/dev/null; then
         cdargs "$1" && pushd "$(cat "$HOME/.cdargsresult")"

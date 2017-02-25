@@ -1,12 +1,14 @@
+#!/bin/bash
+
 log_error() {
     if [ -t 1 ]; then
-        echo $@
+        echo "$@"
     elif hash logger 2>/dev/null; then
-        logger $@
+        logger "$@"
     fi
 }
 
-if [ -z ${DOTFILES+1} ]; then
+if [ -z "${DOTFILES+1}" ]; then
     if [ -d "${HOME}/.dotfiles" ]; then
         DOTFILES="${HOME}/.dotfiles"
     fi
@@ -16,13 +18,13 @@ fi
 
 # Paths
 export LOCAL_PATH="${HOME}/.local"
-mkdir --parents                \
-      ${LOCAL_PATH}            \
-      ${LOCAL_PATH}/lib        \
-      ${LOCAL_PATH}/bin        \
-      ${LOCAL_PATH}/share      \
-      ${LOCAL_PATH}/share/man  \
-      ${LOCAL_PATH}/share/info
+mkdir --parents                  \
+      "${LOCAL_PATH}"            \
+      "${LOCAL_PATH}/lib"        \
+      "${LOCAL_PATH}/bin"        \
+      "${LOCAL_PATH}/share"      \
+      "${LOCAL_PATH}/share/man"  \
+      "${LOCAL_PATH}/share/info"
 
 # Features
 DOTFILES_FEATURES=""
@@ -31,7 +33,7 @@ export LOCAL_BIN="${LOCAL_PATH}/bin"
 setup_haskell() {
     if [ -x "${LOCAL_BIN}/stack" ]; then
         if [ ! -f "${HOME}/.ghci" ]; then
-            ln -s ${DOTFILES}/config/ghci ${HOME}/.ghci
+            ln -s "${DOTFILES}/config/ghci" "${HOME}/.ghci"
         fi
         DOTFILES_FEATURES="haskell ${DOTFILES_FEATURES}"
     else
@@ -42,7 +44,7 @@ setup_haskell() {
 setup_git() {
     if hash git 2>/dev/null; then
         if [ ! -f "${HOME}/.gitignore" ]; then
-            ln -s ${DOTFILES}/config/gitignore ${HOME}/.gitignore
+            ln -s "${DOTFILES}/config/gitignore" "${HOME}/.gitignore"
             git config --global core.excludesfile "${HOME}/.gitignore"
         fi
         DOTFILES_FEATURES="git ${DOTFILES_FEATURES}"
@@ -93,10 +95,11 @@ export PATH=${LOCAL_BIN}:${RUST_PATH}:${PYENV_PATH}:${RBENV_PATH}:${PATH}
 
 # Activate features
 has_feature() {
-    echo ${DOTFILES_FEATURES} | grep $1 > /dev/null 2>&1
+    echo "${DOTFILES_FEATURES}" | grep "$1" > /dev/null 2>&1
 }
 if has_feature rust; then
-    source ${CARGO_PATH}/env 1&>- 2>&1
+    # shellcheck source=/dev/null
+    . "${CARGO_PATH}/env" 1&>- 2>&1
     unset CARGO_PATH
 fi
 if has_feature python; then
@@ -126,9 +129,10 @@ if [ -t 1 ]; then
     [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
     
     # Text editor
-    source ${DOTFILES}/text_editor.sh
-    export EDITOR=$(text_editor)
-    export VISUAL=$(text_editor)
+    # shellcheck source=text_editor.sh
+    . "${DOTFILES}/text_editor.sh"
+    export EDITOR && EDITOR=$(text_editor)
+    export VISUAL && VISUAL=$(text_editor)
 
     # Documentation
     if hash man 2>/dev/null; then
@@ -141,22 +145,27 @@ if [ -t 1 ]; then
     fi
 
     # Keyboard navigation
-    source ${DOTFILES}/directory-navigation.sh
-    source ${DOTFILES}/keyboard-shortcuts.sh
-    if [ ! -f ${HOME}/.inputrc ]; then
-        ln -s ${DOTFILES}/config/inputrc ${HOME}/.inputrc
+    # shellcheck source=directory-navigation.sh
+    . "${DOTFILES}/directory-navigation.sh"
+    # shellcheck source=keyboard-shortcuts.sh
+    . "${DOTFILES}/keyboard-shortcuts.sh"
+    if [ ! -f "${HOME}/.inputrc" ]; then
+        ln -s "${DOTFILES}/config/inputrc" "${HOME}/.inputrc"
     fi
     export INPUTRC=${HOME}/.inputrc
     
     # Prompt
-    source ${DOTFILES}/prompt.sh
+    # shellcheck source=prompt.sh
+    . "${DOTFILES}/prompt.sh"
 
     # Completions
     if ! shopt -oq posix; then
         if [ -f /usr/share/bash-completion/bash_completion ]; then
+            # shellcheck source=/dev/null
             . /usr/share/bash-completion/bash_completion
         elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+            # shellcheck source=/dev/null
+            . /etc/bash_completion
         fi
     fi
 fi
