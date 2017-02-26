@@ -78,9 +78,14 @@ setup_python() {
 setup_go() {
     GOENV_ROOT="${HOME}/.goenv"
     GOENV_PATH="${GOENV_ROOT}/bin"
+    GOPATH="${HOME}/.gocode"
     if [ -d "${GOENV_PATH}" ]; then
         export GOENV_ROOT="${GOENV_ROOT}"
         export GOENV_PATH="${GOENV_PATH}"
+        if [ ! -d "${GOPATH}" ]; then
+            mkdir "{GOPATH}"
+            export GOPATH="${GOPATH}"
+        fi
         DOTFILES_FEATURES="go ${DOTFILES_FEATURES}"
     else
         log_error "Go toolset error: \"${GOENV_PATH}\" does not exist. Install from https://github.com/syndbg/goenv."
