@@ -78,7 +78,8 @@ setup_python() {
 setup_go() {
     GOENV_ROOT="${HOME}/.goenv"
     GOENV_PATH="${GOENV_ROOT}/bin"
-    GOPATH="${HOME}/.gocode"
+    GOPATH="${HOME}/go"
+    GOPATH_BIN="${GOPATH}/bin"
     if [ -d "${GOENV_PATH}" ]; then
         export GOENV_ROOT="${GOENV_ROOT}"
         export GOENV_PATH="${GOENV_PATH}"
@@ -109,7 +110,7 @@ setup_rust
 setup_python
 setup_go
 setup_ruby
-export PATH=${LOCAL_BIN}:${RUST_PATH}:${PYENV_PATH}:${GOENV_PATH}:${RBENV_PATH}:${PATH}
+export PATH=${LOCAL_BIN}:${RUST_PATH}:${PYENV_PATH}:${GOENV_PATH}:${GOPATH_BIN}:${RBENV_PATH}:${PATH}
 
 # Activate features
 has_feature() {
