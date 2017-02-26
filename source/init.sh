@@ -75,6 +75,18 @@ setup_python() {
     fi
 }
 
+setup_go() {
+    GOENV_ROOT="${HOME}/.goenv"
+    GOENV_PATH="${GOENV_ROOT}/bin"
+    if [ -d "${GOENV_PATH}" ]; then
+        export GOENV_ROOT="${GOENV_ROOT}"
+        export GOENV_PATH="${GOENV_PATH}"
+        DOTFILES_FEATURES="go ${DOTFILES_FEATURES}"
+    else
+        log_error "Go toolset error: \"${GOENV_PATH}\" does not exist. Install from https://github.com/syndbg/goenv."
+    fi
+}
+
 setup_ruby() {
     RBENV_PATH="${HOME}/.rbenv/bin"
     if [ -d "${RBENV_PATH}" ]; then
@@ -90,8 +102,9 @@ setup_git
 setup_haskell
 setup_rust
 setup_python
+setup_go
 setup_ruby
-export PATH=${LOCAL_BIN}:${RUST_PATH}:${PYENV_PATH}:${RBENV_PATH}:${PATH}
+export PATH=${LOCAL_BIN}:${RUST_PATH}:${PYENV_PATH}:${GOENV_PATH}:${RBENV_PATH}:${PATH}
 
 # Activate features
 has_feature() {
@@ -106,6 +119,9 @@ if has_feature python; then
     export PYENV_VIRTUALENV_DISABLE_PROMPT=1
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
+fi
+if has_feature go; then
+    eval "$(goenv init -)"
 fi
 if has_feature ruby; then
     eval "$(rbenv init -)"
