@@ -84,7 +84,7 @@ setup_go() {
         export GOENV_ROOT="${GOENV_ROOT}"
         export GOENV_PATH="${GOENV_PATH}"
         if [ ! -d "${GOPATH}" ]; then
-            mkdir "{GOPATH}"
+            mkdir "${GOPATH}"
             export GOPATH="${GOPATH}"
         fi
         DOTFILES_FEATURES="go ${DOTFILES_FEATURES}"
