@@ -31,7 +31,7 @@ DOTFILES_FEATURES=""
 export LOCAL_BIN="${LOCAL_PATH}/bin"
 
 setup_haskell() {
-    if [ -x "${LOCAL_BIN}/stack" ]; then
+    if hash stack 2>/dev/null; then
         if [ ! -f "${HOME}/.ghci" ]; then
             ln -s "${DOTFILES}/config/ghci" "${HOME}/.ghci"
         fi
