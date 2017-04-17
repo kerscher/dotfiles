@@ -15,9 +15,9 @@ parse_os () {
     OS_REDHAT=$(cat /etc/redhat-release 2> /dev/null)
     OS_DEBIAN=$(lsb_release -a 2> /dev/null | grep 'Description:' | cut -d: -f2 | awk '{ print $1, $2, $3 }')
     if [ ! -z "${OS_REDHAT}" ]; then
-        echo "${OS_REDHAT}"
+        echo "${OS_REDHAT} "
     elif [ ! -z "${OS_DEBIAN}" ]; then
-        echo "${OS_DEBIAN}"
+        echo "${OS_DEBIAN} "
     else
         echo ""
     fi
