@@ -103,6 +103,16 @@ setup_ruby() {
     fi
 }
 
+setup_javascript() {
+    NVM_DIR="${HOME}/.nvm"
+    if [ -d "${NVM_DIR}" ]; then
+        export NVM_DIR="${NVM_DIR}"
+        DOTFILES_FEATURES="javascript ${DOTFILES_FEATURES}"
+    else
+        log_error "Javascript toolset error: \"${NVM_DIR}\" does not exist. Reinstall nvm and try again."
+    fi
+}
+
 # Paths
 setup_git
 setup_haskell
@@ -110,6 +120,7 @@ setup_rust
 setup_python
 setup_go
 setup_ruby
+setup_javascript
 export PATH=${LOCAL_BIN}:${RUST_PATH}:${PYENV_PATH}:${GOENV_PATH}:${GOPATH_BIN}:${RBENV_PATH}:${PATH}
 
 # Activate features
@@ -131,6 +142,10 @@ if has_feature go; then
 fi
 if has_feature ruby; then
     eval "$(rbenv init -)"
+fi
+if has_feature javascript; then
+    # shellcheck source=/dev/null
+    [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
 fi
 
 # Is this a terminal?
