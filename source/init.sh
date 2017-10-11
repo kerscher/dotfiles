@@ -113,6 +113,15 @@ setup_javascript() {
     fi
 }
 
+setup_keychain() {
+    if hash keychain 2>/dev/null; then
+        KEYCHAIN_KEYS="$(ls -x --hide config --hide known_hosts --hide *.pub ${HOME}/.ssh)"
+        DOTFILES_FEATURES="keychain ${DOTFILES_FEATURES}"
+    else
+        log_error "SSH keychain error: \"keychain\" executable not found. Install and try again."
+    fi
+}
+
 # Paths
 setup_git
 setup_haskell
@@ -121,6 +130,7 @@ setup_python
 setup_go
 setup_ruby
 setup_javascript
+setup_keychain
 export PATH=${LOCAL_BIN}:${RUST_PATH}:${PYENV_PATH}:${GOENV_PATH}:${GOPATH_BIN}:${RBENV_PATH}:${PATH}
 
 # Activate features
@@ -147,7 +157,9 @@ if has_feature javascript; then
     # shellcheck source=/dev/null
     [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
 fi
-
+if has_feature keychain; then
+    eval "$(keychain --eval --quick --quiet ${KEYCHAIN_KEYS})"
+fi
 # Is this a terminal?
 if [ -t 1 ]; then
     # Update terminal size after each command
