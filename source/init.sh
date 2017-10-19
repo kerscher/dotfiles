@@ -122,6 +122,15 @@ setup_keychain() {
     fi
 }
 
+setup_google_cloud() {
+    if [ -d "${HOME}/.local/share/google-cloud-sdk/" ]; then
+        GCLOUD_ROOT="${HOME}/.local/share/google-cloud-sdk"
+        DOTFILES_FEATURES="googlecloud ${DOTFILES_FEATURES}"
+    else
+        log_error "Google Cloud SDK error: not found! Install in ${HOME}/.local/share/google-cloud-sdk/"
+    fi
+}
+
 # Paths
 setup_git
 setup_haskell
@@ -131,6 +140,7 @@ setup_go
 setup_ruby
 setup_javascript
 setup_keychain
+setup_google_cloud
 export PATH=${LOCAL_BIN}:${RUST_PATH}:${PYENV_PATH}:${GOENV_PATH}:${GOPATH_BIN}:${RBENV_PATH}:${PATH}
 
 # Activate features
@@ -160,6 +170,13 @@ fi
 if has_feature keychain; then
     eval "$(keychain --eval --quick --quiet ${KEYCHAIN_KEYS})"
 fi
+if has_feature googlecloud; then
+    # shellcheck source=/dev/null
+    source "${GCLOUD_ROOT}/path.bash.inc"
+    # shellcheck source=/dev/null
+    source "${GCLOUD_ROOT}/completion.bash.inc"
+fi
+
 # Is this a terminal?
 if [ -t 1 ]; then
     # Update terminal size after each command
