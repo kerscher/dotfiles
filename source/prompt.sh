@@ -45,7 +45,7 @@ if [ -t 1 ]; then
         #C=$(tput setaf 6) # Cyan
         W=$(tput setaf 7) # White
 
-        export PS1="\n\[${N}${B}\]\t \[${H}${B}\]\u \[${H}${B}\]@\[${H}${M}\] \h\[${H}${B}\] \`parse_os\`\[${N}${G}\]\`parse_virtualenv\`\[${N}${W}\]\w\n\$ \[${N}\]"
+        export PS1="\n\[${N}${B}\]\t \[${N}${G}\]\`parse_virtualenv\`\[${N}${W}\]\w\n\$ \[${N}\]"
         unset B
         #unset R
         unset G
@@ -55,6 +55,7 @@ if [ -t 1 ]; then
         #unset C
         unset W
     else
-        export PS1="\n\t \u @ \h \`parse_os\`\`parse_virtualenv\`\w\n\$ "
+        #export PS1="\n\t \u @ \h \`parse_os\`\`parse_virtualenv\`\w\n\$ "
+        export PS1="\n\t\`parse_virtualenv\`\w\n\$ "
     fi
 fi
