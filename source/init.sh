@@ -58,7 +58,9 @@ setup_rust() {
     RUST_PATH="${CARGO_PATH}/bin"
     if [ -d "${RUST_PATH}" ]; then
         export RUST_PATH=${RUST_PATH}
-        export CARGO_PATH=${CARGO_PATH}
+        export PATH=${RUST_PATH}:${PATH}
+        # shellcheck source=/dev/null
+        . "${CARGO_PATH}/env" 1&>- 2>&1
         DOTFILES_FEATURES="rust ${DOTFILES_FEATURES}"
     else
         log_error "Rust toolset error: \"${RUST_PATH}\" does not exist. Reinstall rustup and try again."
@@ -69,6 +71,10 @@ setup_python() {
     PYENV_PATH="${HOME}/.pyenv/bin"
     if [ -d "${PYENV_PATH}" ]; then
         export PYENV_PATH="${PYENV_PATH}"
+        export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+        export PATH=${PYENV_PATH}:${PATH}
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
         DOTFILES_FEATURES="python ${DOTFILES_FEATURES}"
     else
         log_error "Python toolset error: \"${PYENV_PATH}\" does not exist. Reinstall pyenv and try again."
@@ -76,20 +82,19 @@ setup_python() {
 }
 
 setup_go() {
-    GOENV_ROOT="${HOME}/.goenv"
-    GOENV_PATH="${GOENV_ROOT}/bin"
-    GOPATH="${HOME}/go"
-    GOPATH_BIN="${GOPATH}/bin"
-    if [ -d "${GOENV_PATH}" ]; then
-        export GOENV_ROOT="${GOENV_ROOT}"
-        export GOENV_PATH="${GOENV_PATH}"
-        if [ ! -d "${GOPATH}" ]; then
-            mkdir "${GOPATH}"
-            export GOPATH="${GOPATH}"
+    GOENVGOROOT="${HOME}/.golang"
+    GOENVHOME="${HOME}/golang"
+    if [ -d "${GOENVGOROOT}" ]; then
+        export GOENVGOROOT="${GOENVGOROOT}"
+        export GOENVTARGET="${LOCAL_BIN}"
+        if [ ! -d "${GOENVHOME}" ]; then
+            mkdir "${GOENVHOME}"
+            export GOENVHOME="${GOENVHOME}"
         fi
+        source "${GOENVTARGET}/goenvwrapper.sh"
         DOTFILES_FEATURES="go ${DOTFILES_FEATURES}"
     else
-        log_error "Go toolset error: \"${GOENV_PATH}\" does not exist. Install from https://github.com/syndbg/goenv."
+        log_error "Go toolset error: \"${GOENVGOROOT}\" does not exist. Install from https://bitbucket.org/ymotongpoo/goenv."
     fi
 }
 
@@ -97,6 +102,8 @@ setup_ruby() {
     RBENV_PATH="${HOME}/.rbenv/bin"
     if [ -d "${RBENV_PATH}" ]; then
         export RBENV_PATH="${RBENV_PATH}"
+        export PATH=${RBENV_PATH}:${PATH}
+        eval "$(rbenv init -)"
         DOTFILES_FEATURES="ruby ${DOTFILES_FEATURES}"
     else
         log_error "Ruby toolset error: \"${RBENV_PATH}\" does not exist. Reinstall rbenv and try again."
@@ -107,6 +114,8 @@ setup_javascript() {
     NVM_DIR="${HOME}/.nvm"
     if [ -d "${NVM_DIR}" ]; then
         export NVM_DIR="${NVM_DIR}"
+        # shellcheck source=/dev/null
+        [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
         DOTFILES_FEATURES="javascript ${DOTFILES_FEATURES}"
     else
         log_error "Javascript toolset error: \"${NVM_DIR}\" does not exist. Reinstall nvm and try again."
@@ -115,7 +124,8 @@ setup_javascript() {
 
 setup_keychain() {
     if hash keychain 2>/dev/null; then
-        KEYCHAIN_KEYS="$(ls -x --hide config --hide known_hosts --hide *.pub ${HOME}/.ssh)"
+        KEYCHAIN_KEYS="$(ls -x --hide config --hide known_hosts --hide "*.pub" "${HOME}/.ssh")"
+        eval "$(keychain --eval --quick --quiet "${KEYCHAIN_KEYS}")"
         DOTFILES_FEATURES="keychain ${DOTFILES_FEATURES}"
     else
         log_error "SSH keychain error: \"keychain\" executable not found. Install and try again."
@@ -125,59 +135,29 @@ setup_keychain() {
 setup_google_cloud() {
     if [ -d "${HOME}/.local/share/google-cloud-sdk/" ]; then
         GCLOUD_ROOT="${HOME}/.local/share/google-cloud-sdk"
+        # shellcheck source=/dev/null
+        source "${GCLOUD_ROOT}/path.bash.inc"
+        # shellcheck source=/dev/null
+        source "${GCLOUD_ROOT}/completion.bash.inc"
         DOTFILES_FEATURES="googlecloud ${DOTFILES_FEATURES}"
-    elif hash gcloud 2>/dev/null; then
-        printf ''
     else
         log_error "Google Cloud SDK error: not found! Install in ${HOME}/.local/share/google-cloud-sdk/"
     fi
 }
 
-# Paths
-setup_git
-setup_haskell
-setup_rust
-setup_python
-setup_go
+# Setup features
 setup_ruby
 setup_javascript
+setup_python
+setup_go
+setup_rust
+setup_haskell
+setup_git
 setup_keychain
-setup_google_cloud
-export PATH=${LOCAL_BIN}:${RUST_PATH}:${PYENV_PATH}:${GOENV_PATH}:${GOPATH_BIN}:${RBENV_PATH}:${PATH}
+#setup_google_cloud
 
-# Activate features
-has_feature() {
-    echo "${DOTFILES_FEATURES}" | grep "$1" > /dev/null 2>&1
-}
-if has_feature rust; then
-    # shellcheck source=/dev/null
-    . "${CARGO_PATH}/env" 1&>- 2>&1
-    unset CARGO_PATH
-fi
-if has_feature python; then
-    export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
-if has_feature go; then
-    eval "$(goenv init -)"
-fi
-if has_feature ruby; then
-    eval "$(rbenv init -)"
-fi
-if has_feature javascript; then
-    # shellcheck source=/dev/null
-    [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
-fi
-if has_feature keychain; then
-    eval "$(keychain --eval --quick --quiet ${KEYCHAIN_KEYS})"
-fi
-if has_feature googlecloud; then
-    # shellcheck source=/dev/null
-    source "${GCLOUD_ROOT}/path.bash.inc"
-    # shellcheck source=/dev/null
-    source "${GCLOUD_ROOT}/completion.bash.inc"
-fi
+# LOCAL_BIN should always be the preferred path for binaries
+export PATH=${LOCAL_BIN}:${PATH}
 
 # Is this a terminal?
 if [ -t 1 ]; then
