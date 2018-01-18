@@ -136,8 +136,7 @@ setup_javascript() {
 
 setup_keychain() {
     if hash keychain 2>/dev/null; then
-        KEYCHAIN_KEYS="$(ls -x --hide config --hide known_hosts --hide "*.pub" "${HOME}/.ssh")"
-        eval "$(keychain --eval --quick --quiet "${KEYCHAIN_KEYS}")"
+        eval "$(keychain --eval --quick --quiet)"
         DOTFILES_FEATURES="keychain ${DOTFILES_FEATURES}"
     else
         log_error "SSH keychain error: \"keychain\" executable not found. Install and try again."
