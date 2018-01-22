@@ -2,9 +2,9 @@
 
 log_error() {
     if [ -t 1 ]; then
-        echo "$@"
+        echo "dotfiles: $*"
     elif hash logger 2>/dev/null; then
-        logger "$@"
+        logger -t "dotfiles" "$*"
     fi
 }
 
@@ -26,147 +26,26 @@ mkdir --parents                  \
       "${LOCAL_PATH}/share/man"  \
       "${LOCAL_PATH}/share/info"
 
-# Features
-DOTFILES_FEATURES=""
 export LOCAL_BIN="${LOCAL_PATH}/bin"
 
-setup_haskell() {
-    if hash stack 2>/dev/null; then
-        if [ ! -f "${HOME}/.ghci" ]; then
-            ln -s "${DOTFILES}/config/ghci" "${HOME}/.ghci"
-        fi
-        DOTFILES_FEATURES="haskell ${DOTFILES_FEATURES}"
-    else
-        log_error "Haskell toolset error: reinstall stack and try again."
-    fi
-}
-
-setup_git() {
-    if hash git 2>/dev/null; then
-        if [ ! -f "${HOME}/.gitignore" ]; then
-            ln -s "${DOTFILES}/config/gitignore" "${HOME}/.gitignore"
-            git config --global core.excludesfile "${HOME}/.gitignore"
-        fi
-        DOTFILES_FEATURES="git ${DOTFILES_FEATURES}"
-    else
-        log_error "Git error: no git executable found. Install and try again."
-    fi
-}
-
-setup_rust() {
-    CARGO_PATH="${HOME}/.cargo"
-    RUST_PATH="${CARGO_PATH}/bin"
-    if [ -d "${RUST_PATH}" ]; then
-        export RUST_PATH=${RUST_PATH}
-        export PATH=${RUST_PATH}:${PATH}
+declare -a features=("ruby"
+                     "javascript"
+                     "python"
+                     "terraform"
+                     "go"
+                     "rust"
+                     "haskell"
+                     "git"
+                     "keychain"
+                    )
+for f in "${features[@]}"; do
+    if [ -f "${DOTFILES}/features/${f}.sh" ]; then
         # shellcheck source=/dev/null
-        . "${CARGO_PATH}/env" 1&>- 2>&1
-        DOTFILES_FEATURES="rust ${DOTFILES_FEATURES}"
+        source "${DOTFILES}/features/${f}.sh"
     else
-        log_error "Rust toolset error: \"${RUST_PATH}\" does not exist. Reinstall rustup and try again."
+        log_error "could not activate ${f}. Check if ${DOTFILES}/features/${f}.sh exists"
     fi
-}
-
-setup_python() {
-    PYENV_PATH="${HOME}/.pyenv/bin"
-    if [ -d "${PYENV_PATH}" ]; then
-        export PYENV_PATH="${PYENV_PATH}"
-        export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-        export PATH=${PYENV_PATH}:${PATH}
-        eval "$(pyenv init -)"
-        eval "$(pyenv virtualenv-init -)"
-        DOTFILES_FEATURES="python ${DOTFILES_FEATURES}"
-    else
-        log_error "Python toolset error: \"${PYENV_PATH}\" does not exist. Reinstall pyenv and try again."
-    fi
-}
-
-setup_go() {
-    GOENV_ROOT="${HOME}/.goenv"
-    GOENV_PATH="${GOENV_ROOT}/bin"
-    GOPATH="${HOME}/go"
-    if [ -d "${GOENV_ROOT}" ]; then
-        export GOENV_ROOT="${GOENV_ROOT}"
-        if [ ! -d "${GOPATH}" ]; then
-            mkdir "${GOPATH}"
-            export GOPATH="${GOPATH}"
-        fi
-        export PATH=${GOENV_PATH}:${GOPATH}/bin:${PATH}
-        # shellcheck source=/dev/null
-        eval "$(goenv init -)"
-        DOTFILES_FEATURES="go ${DOTFILES_FEATURES}"
-    else
-        log_error "Go toolset error: \"${GOENV_ROOT}\" does not exist. Install from https://github.com/syndbg/goenv."
-    fi
-}
-
-setup_terraform() {
-    TFENV_ROOT="${HOME}/.tfenv"
-    TFENV_PATH="${TFENV_ROOT}/bin"
-    if [ -d "${TFENV_ROOT}" ]; then
-        export PATH=${TFENV_PATH}:${PATH}
-    else
-        log_error "Terraform toolset error: \"${TFENV_ROOT}\" does not exist. Install from https://github.com/kamatama41/tfenv."
-    fi
-}
-
-setup_ruby() {
-    RBENV_PATH="${HOME}/.rbenv/bin"
-    if [ -d "${RBENV_PATH}" ]; then
-        export RBENV_PATH="${RBENV_PATH}"
-        export PATH=${RBENV_PATH}:${PATH}
-        eval "$(rbenv init -)"
-        DOTFILES_FEATURES="ruby ${DOTFILES_FEATURES}"
-    else
-        log_error "Ruby toolset error: \"${RBENV_PATH}\" does not exist. Reinstall rbenv and try again."
-    fi
-}
-
-setup_javascript() {
-    NVM_DIR="${HOME}/.nvm"
-    if [ -d "${NVM_DIR}" ]; then
-        export NVM_DIR="${NVM_DIR}"
-        # shellcheck source=/dev/null
-        [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
-        DOTFILES_FEATURES="javascript ${DOTFILES_FEATURES}"
-    else
-        log_error "Javascript toolset error: \"${NVM_DIR}\" does not exist. Reinstall nvm and try again."
-    fi
-}
-
-setup_keychain() {
-    if hash keychain 2>/dev/null; then
-        eval "$(keychain --eval --quick --quiet)"
-        DOTFILES_FEATURES="keychain ${DOTFILES_FEATURES}"
-    else
-        log_error "SSH keychain error: \"keychain\" executable not found. Install and try again."
-    fi
-}
-
-setup_google_cloud() {
-    if [ -d "${HOME}/.local/share/google-cloud-sdk/" ]; then
-        GCLOUD_ROOT="${HOME}/.local/share/google-cloud-sdk"
-        # shellcheck source=/dev/null
-        source "${GCLOUD_ROOT}/path.bash.inc"
-        # shellcheck source=/dev/null
-        source "${GCLOUD_ROOT}/completion.bash.inc"
-        DOTFILES_FEATURES="googlecloud ${DOTFILES_FEATURES}"
-    else
-        log_error "Google Cloud SDK error: not found! Install in ${HOME}/.local/share/google-cloud-sdk/"
-    fi
-}
-
-# Setup features
-setup_ruby
-setup_javascript
-setup_python
-setup_terraform
-setup_go
-setup_rust
-setup_haskell
-setup_git
-setup_keychain
-#setup_google_cloud
+done
 
 # LOCAL_BIN should always be the preferred path for binaries
 export PATH=${LOCAL_BIN}:${PATH}
