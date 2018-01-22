@@ -25,9 +25,17 @@ mkdir --parents                  \
       "${LOCAL_PATH}/share"      \
       "${LOCAL_PATH}/share/man"  \
       "${LOCAL_PATH}/share/info"
-
 export LOCAL_BIN="${LOCAL_PATH}/bin"
 
+# Features
+load_feature() {
+    if [ -f "${DOTFILES}/features/${1}.sh" ]; then
+        # shellcheck source=/dev/null
+        source "${DOTFILES}/features/${1}.sh"
+    else
+        log_error "could not activate ${1}. Check if ${DOTFILES}/features/${1}.sh exists"
+    fi
+}
 declare -a features=("ruby"
                      "javascript"
                      "python"
@@ -39,12 +47,7 @@ declare -a features=("ruby"
                      "keychain"
                     )
 for f in "${features[@]}"; do
-    if [ -f "${DOTFILES}/features/${f}.sh" ]; then
-        # shellcheck source=/dev/null
-        source "${DOTFILES}/features/${f}.sh"
-    else
-        log_error "could not activate ${f}. Check if ${DOTFILES}/features/${f}.sh exists"
-    fi
+    load_feature "${f}"
 done
 
 # LOCAL_BIN should always be the preferred path for binaries
@@ -54,7 +57,7 @@ export PATH=${LOCAL_BIN}:${PATH}
 if [ -t 1 ]; then
     # Update terminal size after each command
     shopt -s checkwinsize
-    
+
     # History
     export HISTCONTROL="ignoreboth:erasedups"
     shopt -s histappend
@@ -66,7 +69,7 @@ if [ -t 1 ]; then
 
     # Pager preprocessor
     [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-    
+
     # Text editor
     # shellcheck source=/scripts/source/text_editor.sh
     . "${DOTFILES}/text_editor.sh"
@@ -92,7 +95,7 @@ if [ -t 1 ]; then
         ln -s "${DOTFILES}/config/inputrc" "${HOME}/.inputrc"
     fi
     export INPUTRC=${HOME}/.inputrc
-    
+
     # Prompt
     # shellcheck source=/scripts/source/prompt.sh
     . "${DOTFILES}/prompt.sh"
