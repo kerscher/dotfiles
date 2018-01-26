@@ -2,7 +2,7 @@
 
 setup_keychain() {
     if hash keychain 2>/dev/null; then
-        eval "$(keychain --eval --quick --quiet)"
+        eval "$(keychain --eval --quiet)"
         DOTFILES_FEATURES="keychain ${DOTFILES_FEATURES}"
     else
         log_error "SSH keychain error: \"keychain\" executable not found. Install and try again."
