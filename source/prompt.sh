@@ -41,11 +41,11 @@ if [ -t 1 ]; then
         G=$(tput setaf 2) # Green
         #Y=$(tput setaf 3) # Yellow
         B=$(tput setaf 4) # Blue
-        M=$(tput setaf 5) # Magenta
+        #M=$(tput setaf 5) # Magenta
         #C=$(tput setaf 6) # Cyan
         W=$(tput setaf 7) # White
 
-        export PS1="\n\[${N}${B}\]\t \[${N}${G}\]\`parse_virtualenv\`\[${N}${W}\]\w\n\$ \[${N}\]"
+        export PS1="\\n\\[${N}${B}\\]\\t \\[${N}${G}\\]\`parse_virtualenv\`\\[${N}${W}\\]\\w\\n\$ \\[${N}\\]"
         unset B
         #unset R
         unset G
