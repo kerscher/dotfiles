@@ -36,4 +36,7 @@
 :seti -XTypeFamilies
 :seti -XTypeSynonymInstances
 :seti -XViewPatterns
+:m -Prelude
+import Prelude ()
+import RIO
 :set prompt "\ESC[36;1mλ \ESC[m"
