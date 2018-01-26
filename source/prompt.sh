@@ -33,7 +33,7 @@ if [ -t 1 ]; then
     if [ -n "${TERM_COLOURS}" ] && [ "${TERM_COLOURS}" -ge 8 ]; then
         # Typeface weight
         N="$(tput sgr0)" # Normal, or regular
-        H="$(tput bold)" # Heavy, or bold
+        #H="$(tput bold)" # Heavy, or bold
 
         # Typeface colour
         B=$(tput setaf 0) # Black
@@ -56,6 +56,6 @@ if [ -t 1 ]; then
         unset W
     else
         #export PS1="\n\t \u @ \h \`parse_os\`\`parse_virtualenv\`\w\n\$ "
-        export PS1="\n\t\`parse_virtualenv\`\w\n\$ "
+        export PS1="\\n\\t\`parse_virtualenv\`\\w\\n\$ "
     fi
 fi
