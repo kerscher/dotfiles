@@ -33,7 +33,4 @@
 :seti -XDeriveFoldable
 :seti -XDeriveTraversable
 :seti -XConstraintKinds
-:m -Prelude
-import Prelude ()
-import Preliminaries
 :set prompt "\ESC[36;1mλ \ESC[m"
