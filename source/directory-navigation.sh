@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -B
+
 change_directory() {
     if hash cdargs 2>/dev/null; then
         cdargs "$1" && pushd "$(cat "$HOME/.cdargsresult")" || exit
@@ -42,7 +44,7 @@ function _apparix_aliases ()
     COMPREPLY=()
     if [ "$1" == "$3" ]
     then
-        COMPREPLY=( $( cat "$HOME/.apparix{rc,expand}" | \
+        COMPREPLY=( $( cat $HOME/.apparix{rc,expand} | \
                        grep "j,.*$cur.*," | cut -f2 -d, ) )
     else
         dir=$(apparix -favour rOl $dir 2>/dev/null) || return 0
