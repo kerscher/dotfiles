@@ -46,6 +46,7 @@ declare -a features=("ruby"
                      "git"
                      "keychain"
                      "locate_user_data"
+                     "docker"
                     )
 for f in "${features[@]}"; do
     load_feature "${f}"
