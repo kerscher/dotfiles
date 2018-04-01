@@ -17,6 +17,7 @@ else
 fi
 
 # Paths
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 export LOCAL_PATH="${HOME}/.local"
 mkdir --parents                  \
       "${LOCAL_PATH}"            \
@@ -26,6 +27,7 @@ mkdir --parents                  \
       "${LOCAL_PATH}/share/man"  \
       "${LOCAL_PATH}/share/info"
 export LOCAL_BIN="${LOCAL_PATH}/bin"
+export PATH=${LOCAL_BIN}:${PATH}
 
 # Features
 load_feature() {
@@ -39,6 +41,7 @@ load_feature() {
 declare -a features=("ruby"
                      "javascript"
                      "python"
+                     "plan9"
                      "terraform"
                      "go"
                      "rust"
@@ -51,9 +54,6 @@ declare -a features=("ruby"
 for f in "${features[@]}"; do
     load_feature "${f}"
 done
-
-# LOCAL_BIN should always be the preferred path for binaries
-export PATH=${LOCAL_BIN}:${PATH}
 
 # Is this a terminal?
 if [ -t 1 ]; then
