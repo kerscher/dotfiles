@@ -36,17 +36,18 @@ if [ -t 1 ]; then
         #H="$(tput bold)" # Heavy, or bold
 
         # Typeface colour
-        B=$(tput setaf 0) # Black
+        BL=$(tput setaf 0) # Black
         #R=$(tput setaf 1) # Red
         G=$(tput setaf 2) # Green
         #Y=$(tput setaf 3) # Yellow
         B=$(tput setaf 4) # Blue
-        #M=$(tput setaf 5) # Magenta
+        M=$(tput setaf 5) # Magenta
         #C=$(tput setaf 6) # Cyan
         W=$(tput setaf 7) # White
 
-        export PS1="\\n\\[${N}${B}\\]\\t \\[${N}${G}\\]\`parse_virtualenv\`\\[${N}${W}\\]\\w\\n\$ \\[${N}\\]"
+        export PS1="\\n\\[${N}${M}\\]\\t \\[${N}${G}\\]\`parse_virtualenv\`\\[${H}${BL}\\]\\w\\n\$ \\[${N}${BL}\\]"
         unset B
+        unset BL
         #unset R
         unset G
         #unset Y
