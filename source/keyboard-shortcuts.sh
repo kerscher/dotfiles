@@ -19,7 +19,7 @@ list_tree() {
     if hash tree 2>/dev/null; then
         tree --dirsfirst -C -L 2 "$@"
     elif hash exa 2>/dev/null; then
-        exa --tree --group-directories-first --level 2 "$@"
+        exa --tree --group-directories-first --level 2  "$@"
     else
         ls                   \
             --recursive      \
@@ -48,26 +48,35 @@ list_detailed_tree() {
 
 list_files() {
     if hash exa 2>/dev/null; then
-        exa --header --long --git --group-directories-first "$@"
+        exa \
+            --header \
+            --long \
+            --git \
+            --group-directories-first \
+            --colour=never "$@"
     else
         ls                   \
-            --color          \
             --classify       \
             --human-readable \
-            --group-directories-first
+            --group-directories-first "$@"
     fi
 }
 
 list_all_files() {
     if hash exa 2>/dev/null; then
-        exa --header --long --git --group-directories-first --all "$@"
+        exa \
+            --header \
+            --long \
+            --git \
+            --group-directories-first \
+            --all \
+            --colour=never "$@"
     else
         ls                   \
             --all            \
-            --color          \
             --classify       \
             --human-readable \
-            --group-directories-first
+            --group-directories-first "$@"
     fi
 }
 
