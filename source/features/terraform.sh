@@ -1,5 +1,14 @@
 #!/bin/bash
 
+tf_feedback() {
+    while sleep 1
+    do
+        find . -maxdepth 1 -iname '*.tf' \
+            | entr -c -d sh -c \
+                   'terraform init && terraform validate'
+    done
+}
+
 setup_terraform() {
     TFENV_ROOT="${HOME}/.tfenv"
     TFENV_PATH="${TFENV_ROOT}/bin"
