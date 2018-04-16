@@ -38,20 +38,20 @@ if [ -t 1 ]; then
         # Typeface colour
         BL=$(tput setaf 0) # Black
         #R=$(tput setaf 1) # Red
-        G=$(tput setaf 2) # Green
+        #G=$(tput setaf 2) # Green
         #Y=$(tput setaf 3) # Yellow
-        B=$(tput setaf 4) # Blue
-        M=$(tput setaf 5) # Magenta
+        #B=$(tput setaf 4) # Blue
+        #M=$(tput setaf 5) # Magenta
         #C=$(tput setaf 6) # Cyan
         W=$(tput setaf 7) # White
 
-        export PS1="\\n\\[${H}${BL}\\]\\t \\[${N}${BL}\\]\`parse_virtualenv\`\\[${H}${W}\\]\\w\\n\$ \\[${N}${W}\\]"
-        unset B
+        export PS1="\\n\\[${N}${B}\\]\\t \\[${N}${BL}\\]\`parse_virtualenv\`\\[${H}${W}\\]\\w\\n\$ \\[${N}${W}\\]"
+        #unset B
         unset BL
         #unset R
-        unset G
+        #unset G
         #unset Y
-        unset B
+        #unset B
         unset M
         #unset C
         unset W
