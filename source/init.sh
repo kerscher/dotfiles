@@ -38,9 +38,7 @@ load_feature() {
         log_error "could not activate ${1}. Check if ${DOTFILES}/features/${1}.sh exists"
     fi
 }
-declare -a features=("ruby"
-                     "javascript"
-                     "python"
+declare -a features=("python"
                      "plan9"
                      "terraform"
                      "go"
