@@ -23,7 +23,7 @@ curl https://sh.rustup.rs -sSf | sh
 curl -sSL https://get.haskellstack.org/ | sh
 
 sudo git clone https://github.com/9fans/plan9port /usr/local/plan9 
-sudo chown -R ${USER}:${USER} /usr/local/plan9
+sudo chown -R "${USER}:${USER}" /usr/local/plan9
 pushd /usr/local/plan9
 ./INSTALL
 popd
