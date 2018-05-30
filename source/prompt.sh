@@ -34,7 +34,7 @@ seconds_to_timestamp () {
     ((sec=i%60, i/=60, min=i%60, hrs=i/60))
     timestamp=$(printf "%d:%02d:%02d" $hrs $min $sec)
     echo "${timestamp}"
-    unset sec min hrs
+    unset sec min hrs i
 }
 
 seconds_since_last_command () {
