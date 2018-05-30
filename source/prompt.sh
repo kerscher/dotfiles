@@ -25,6 +25,27 @@ parse_os () {
     unset OS_DEBIAN
 }
 
+export last_timestamp_file
+last_timestamp_file="$(mktemp)"
+date +'%s' > "${last_timestamp_file}"
+
+seconds_to_timestamp () {
+    i=${1}
+    ((sec=i%60, i/=60, min=i%60, hrs=i/60))
+    timestamp=$(printf "%d:%02d:%02d" $hrs $min $sec)
+    echo "${timestamp}"
+    unset sec min hrs
+}
+
+seconds_since_last_command () {
+    last_timestamp="$(cat "${last_timestamp_file}")"
+    current_timestamp="$(date +'%s')"
+    diff_timestamp=$((current_timestamp - last_timestamp))
+    seconds_to_timestamp "${diff_timestamp}"
+    echo "${current_timestamp}" > "${last_timestamp_file}"
+    unset last_timestamp current_timestamp diff_timestamp
+}
+
 # We only set the prompt on an interactive terminal
 if [ -t 1 ]; then
     # How many colors do we have?
@@ -36,7 +57,7 @@ if [ -t 1 ]; then
         #H="$(tput bold)" # Heavy, or bold
 
         # Typeface colour
-        BL=$(tput setaf 0) # Black
+        #BL=$(tput setaf 0) # Black
         #R=$(tput setaf 1) # Red
         #G=$(tput setaf 2) # Green
         #Y=$(tput setaf 3) # Yellow
@@ -45,7 +66,8 @@ if [ -t 1 ]; then
         #C=$(tput setaf 6) # Cyan
         W=$(tput setaf 7) # White
 
-        export PS1="\\n\\[${N}${B}\\]\\t \\[${N}${BL}\\]\`parse_virtualenv\`\\[${H}${W}\\]\\w\\n\$ \\[${N}${W}\\]"
+        export PS1
+        PS1="\\n\\[${N}${B}\\]\\t \\[${N}${B}\\]+\`seconds_since_last_command\`s \\[${H}${W}\\]\\w\\n\$ \\[${N}${W}\\]"
         #unset B
         unset BL
         #unset R
