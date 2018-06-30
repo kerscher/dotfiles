@@ -58,7 +58,7 @@ pushd /usr/local/plan9
 popd
 
 install_go_tools() {
-    for t in alecthomas/gometalinter liudng/dogo mitchellh/gox svent/sift; do
+    for t in alecthomas/gometalinter liudng/dogo mitchellh/gox svent/sift astaxie/bat; do
         go get -u "github.com/${t}"
     done
 
