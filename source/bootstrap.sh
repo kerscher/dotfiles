@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -o errexit
+set -o nounset
+set -o pipefail
+
 if [[ -f /etc/redhat-release ]]; then
     sudo dnf install install \
          cmake \
