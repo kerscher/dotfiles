@@ -9,8 +9,8 @@ if [[ -f /etc/redhat-release ]]; then
          cmake \
          ca-certificates \
          curl \
+         dnf-plugins-core \
          git \
-         docker-latest \
          jq \
          keychain \
          monkeysphere \
@@ -25,6 +25,12 @@ if [[ -f /etc/redhat-release ]]; then
          pass \
          pass-otp \
          qtpass
+
+    sudo dnf config-manager \
+         --add-repo \
+         https://download.docker.com/linux/fedora/docker-ce.repo
+
+    sudo dnf install docker-ce
 fi
 
 if [[ -f /etc/lsb_release ]]; then   
