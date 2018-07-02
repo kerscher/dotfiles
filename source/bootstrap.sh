@@ -47,22 +47,36 @@ if [[ -f /etc/redhat-release ]]; then
     sudo dnf install docker-ce
 fi
 
-if [[ -f /etc/lsb_release ]]; then   
+if [[ -f /etc/lsb_release ]]; then
+    declare -a ubuntu_packages=(
+         "ca-certificates"
+         "curl"
+         "docker.io"
+         "emacs-snapshot"
+         "git"
+         "jq"
+         "keychain"
+         "libbz2-dev"
+         "libreadline-dev"
+         "libsqlite3-dev"
+         "libssl-dev"
+         "lzma"
+         "monkeysphere"
+         "oathtool"
+         "pass"
+         "qrencode"
+         "tree"
+         "xorg-dev"
+         "zbar-tools"
+        "build-essential"
+        "cmake"
+        "ninja-build"
+    )
+
     sudo add-apt-repository ppa:ubuntu-elisp/ppa
     sudo apt update
     sudo apt dist-upgrade
-    sudo apt install \
-         build-essential cmake ninja-build \
-         ca-certificates \
-         curl git \
-         docker.io \
-         emacs-snapshot \
-         jq \
-         keychain monkeysphere \
-         libssl-dev libsqlite3-dev xorg-dev libbz2-dev libreadline-dev lzma \
-         pass \
-         tree \
-         zbar-tools qrencode oathtool
+    sudo apt install "${ubuntu_packages[@]}"
 fi
 
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
@@ -94,18 +108,26 @@ install_go_tools() {
 }
 
 install_rust_tools() {
-    cargo install \
-          clog-cli \
-          drill \
-          funzzy \
-          just \
-          ripgrep \
-          xsv
+    declare -a rust_packages=(
+        "clog-cli"
+        "drill"
+        "funzzy"
+        "just"
+        "ripgrep"
+        "xsv"
+    )
+
+    cargo install "${rust_packages[@]}"
 }
 
 install_haskell_tools() {
-    stack install \
-          brittany \
-          hindent \
-          pandoc
+    declare -a haskell_packages=(
+        "brittany"
+        "hindent"
+        "pandoc"
+        "ShellCheck"
+        "hlint"
+    )
+
+    stack install "${haskell_packages[@]}"
 }
