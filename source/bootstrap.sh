@@ -5,26 +5,40 @@ set -o nounset
 set -o pipefail
 
 if [[ -f /etc/redhat-release ]]; then
-    sudo dnf install install \
-         cmake \
-         ca-certificates \
-         curl \
-         dnf-plugins-core \
-         git \
-         jq \
-         keychain \
-         monkeysphere \
-         openssl-devel \
-         bzip2-devel \
-         readline-devel \
-         lzma-devel \
-         sqlite-devel \
-         qrencode \
-         zbar \
-         oathtool \
-         pass \
-         pass-otp \
-         qtpass
+    declare -a fedora_packages=(
+         "bzip2-devel"
+         "bzip2-devel"
+         "ca-certificates"
+         "cmake"
+         "curl"
+         "dnf-plugins-core"
+         "emacs"
+         "fontconfig-devel"
+         "freetype-devel"
+         "git"
+         "jq"
+         "keychain"
+         "libXext-devel"
+         "libXt-devel"
+         "libffi-devel"
+         "lzma-devel"
+         "lzma-devel"
+         "monkeysphere"
+         "oathtool"
+         "openssl-devel"
+         "pass"
+         "pass-otp"
+         "qrencode"
+         "qtpass"
+         "readline-devel"
+         "readline-devel"
+         "sqlite-devel"
+         "tilda"
+         "xorg-x11-server-devel"
+         "zbar"
+    )
+
+    sudo dnf install "${fedora_packages[@]}"
 
     sudo dnf config-manager \
          --add-repo \
