@@ -99,6 +99,7 @@ install_go_tools() {
         "liudng/dogo"
         "mitchellh/gox"
         "svent/sift"
+        "segmentio/terraform-docs"
     )
     for t in "${go_packages[@]}"; do
         go get -u "github.com/${t}"
