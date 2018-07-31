@@ -5,7 +5,7 @@ setup_python() {
     if [ -d "${PYENV_PATH}" ]; then
         export PYENV_PATH="${PYENV_PATH}"
         export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-        export PATH=${PYENV_PATH}:${PATH}
+        export PATH="${PYENV_PATH}:${PATH}"
         eval "$(pyenv init -)"
         eval "$(pyenv virtualenv-init -)"
         DOTFILES_FEATURES="python ${DOTFILES_FEATURES}"
