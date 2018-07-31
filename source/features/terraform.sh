@@ -12,8 +12,8 @@ setup_terraform() {
             while sleep 1
             do
                 find . -maxdepth 1 -iname '*.tf' \
-                    | entr -c -d sh -c \
-                           'tf init && tf validate'
+                    | entr -c -d bash -c \
+                           'aws-env -p default terraform init && aws-env -p default terraform validate'
             done
         }
     else
