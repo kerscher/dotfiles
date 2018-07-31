@@ -49,6 +49,7 @@ declare -a features=("python"
                      "keychain"
                      "locate_user_data"
                      "docker"
+                     "scala"
                      "nix"
                     )
 for f in "${features[@]}"; do
