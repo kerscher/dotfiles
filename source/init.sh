@@ -39,7 +39,6 @@ load_feature() {
     fi
 }
 declare -a features=("python"
-                     "plan9"
                      "terraform"
                      "go"
                      "ruby"
