@@ -49,7 +49,6 @@ declare -a features=("python"
                      "locate_user_data"
                      "docker"
                      "scala"
-                     "nix"
                     )
 for f in "${features[@]}"; do
     load_feature "${f}"
