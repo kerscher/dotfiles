@@ -21,9 +21,11 @@ if [[ -f /etc/redhat-release ]]; then
          "libXext-devel"
          "libXt-devel"
          "libffi-devel"
+         "libicu-devel"
          "lzma-devel"
          "lzma-devel"
          "monkeysphere"
+         "ncurses-compat-libs"
          "oathtool"
          "openssl-devel"
          "pass"
@@ -49,7 +51,9 @@ fi
 
 if [[ -f /etc/lsb_release ]]; then
     declare -a ubuntu_packages=(
+         "build-essential"
          "ca-certificates"
+         "cmake"
          "curl"
          "docker.io"
          "emacs-snapshot"
@@ -57,20 +61,20 @@ if [[ -f /etc/lsb_release ]]; then
          "jq"
          "keychain"
          "libbz2-dev"
+         "libicu-dev"
          "libreadline-dev"
          "libsqlite3-dev"
          "libssl-dev"
+         "libtinfo-dev"
          "lzma"
          "monkeysphere"
+         "ninja-build"
          "oathtool"
          "pass"
          "qrencode"
          "tree"
          "xorg-dev"
          "zbar-tools"
-        "build-essential"
-        "cmake"
-        "ninja-build"
     )
 
     sudo add-apt-repository ppa:ubuntu-elisp/ppa
@@ -98,8 +102,9 @@ install_go_tools() {
         "jessfraz/dockfmt"
         "liudng/dogo"
         "mitchellh/gox"
-        "svent/sift"
         "segmentio/terraform-docs"
+        "sourcegraph/go-langserver"
+        "svent/sift"
     )
     for t in "${go_packages[@]}"; do
         go get -u "github.com/${t}"
@@ -131,4 +136,24 @@ install_haskell_tools() {
     )
 
     stack install "${haskell_packages[@]}"
+}
+
+install_python_tools() {
+    declare -a python_packages=(
+        "python-language-server[all]"
+        "black"
+        "isort"
+        "mccabe"
+        "mypy"
+        "pycodestyle"
+        "pydocstyle"
+        "pyflakes"
+        "pyls-black"
+        "pyls-isort"
+        "pyls-mypy"
+        "rope"
+    )
+
+    pip install --upgrade pip setuptools
+    pip install --upgrade "${python_packages[@]}"
 }
