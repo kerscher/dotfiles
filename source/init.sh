@@ -46,7 +46,6 @@ declare -a features=("python"
                      "haskell"
                      "git"
                      "keychain"
-                     "locate_user_data"
                      "docker"
                      "scala"
                     )
