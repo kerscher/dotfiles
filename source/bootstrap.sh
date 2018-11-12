@@ -101,6 +101,7 @@ install_go_tools() {
         "astaxie/bat"
         "jessfraz/dockfmt"
         "liudng/dogo"
+        "mdempsky/gocode"
         "mitchellh/gox"
         "segmentio/terraform-docs"
         "sourcegraph/go-langserver"
