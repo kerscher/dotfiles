@@ -141,7 +141,6 @@ install_haskell_tools() {
 
 install_python_tools() {
     declare -a python_packages=(
-        "python-language-server[all]"
         "black"
         "isort"
         "mccabe"
@@ -149,9 +148,11 @@ install_python_tools() {
         "pycodestyle"
         "pydocstyle"
         "pyflakes"
+        "pygments"
         "pyls-black"
         "pyls-isort"
         "pyls-mypy"
+        "python-language-server[all]"
         "rope"
     )
 
