@@ -92,22 +92,6 @@ cabal.sandbox.config
 .stack-work/
 cabal.project.local
 
-## Idris
-*.ibc
-*.o
-
-## R
-.Rhistory
-.Rapp.history
-.RData
-*-Ex.R
-*.utf8.md
-*.knit.md
-
-## Sass
-.sass-cache/
-*.css.map
-
 ## TeX
 *.aux
 *.lof
@@ -209,3 +193,7 @@ pythontex-files-*/
 *.xyc
 *.ttt
 *.fff
+
+## Idris
+*.ibc
+*.o
