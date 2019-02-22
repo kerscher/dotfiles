@@ -38,17 +38,18 @@ load_feature() {
         log_error "could not activate ${1}. Check if ${DOTFILES}/features/${1}.sh exists"
     fi
 }
-declare -a features=("python"
-                     "terraform"
-                     "go"
-                     "ruby"
-                     "rust"
-                     "haskell"
-                     "git"
-                     "keychain"
-                     "docker"
-                     "scala"
-                    )
+declare -a features=(
+    "docker"
+    "git"
+    "go"
+    "haskell"
+    "keychain"
+    "nix"
+    "python"
+    "ruby"
+    "rust"
+    "terraform"
+)
 for f in "${features[@]}"; do
     load_feature "${f}"
 done
