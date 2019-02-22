@@ -30,6 +30,12 @@ Session.vim
 
 # Programming languages
 
+## Terraform
+
+.terraform
+terraform.tfvars*
+terraform.tfstate*
+
 ## C
 *.d
 *.o
