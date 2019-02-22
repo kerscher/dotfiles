@@ -6,7 +6,7 @@ setup_terraform() {
     if [ -d "${TFENV_ROOT}" ]; then
         export PATH=${TFENV_PATH}:${PATH}
 
-        tf() { aws-env -p default terraform "$@"; };
+        tf() { aws-env terraform "$@"; };
 
         tf_feedback() {
             while sleep 1
