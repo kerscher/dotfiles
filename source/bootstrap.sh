@@ -97,8 +97,8 @@ popd
 
 install_go_tools() {
     declare -a go_packages=(
-        "alecthomas/gometalinter"
         "astaxie/bat"
+        "golangci/golangci-lint/cmd/golangci-lint"
         "jessfraz/dockfmt"
         "liudng/dogo"
         "mdempsky/gocode"
@@ -110,8 +110,6 @@ install_go_tools() {
     for t in "${go_packages[@]}"; do
         go get -u "github.com/${t}"
     done
-
-    gometalinter --install
 }
 
 install_rust_tools() {
