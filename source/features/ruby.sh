@@ -1,9 +1,13 @@
 #!/bin/bash
 
 sumdog_tools() {
-    if [ ! -z "${SUMDOG_TOOLS_PATH}" ]; then
+    if [ -n "${SUMDOG_TOOLS_PATH}" ]; then
         pushd "${SUMDOG_TOOLS_PATH}" > /dev/null || return 
-        bundle exec sd "$@"
+        sumdog_tools_cmd_prefix=''
+        if hash aws-env > /dev/null 2>&1; then
+            sumdog_tools_cmd_prefix='aws-env'
+        fi
+        "${sumdog_tools_cmd_prefix}" bundle exec sd "$@"
         popd > /dev/null || return
     else
         log_error "SUMDOG_TOOLS_PATH not set. Export it with an absolute path."
