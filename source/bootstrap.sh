@@ -129,7 +129,6 @@ install_rust_tools() {
 
 install_haskell_tools() {
     declare -a haskell_packages=(
-        "brittany"
         "hindent"
         "pandoc"
         "ShellCheck"
