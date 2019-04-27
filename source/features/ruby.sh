@@ -4,7 +4,7 @@ sumdog_tools() {
     if [ -n "${SUMDOG_TOOLS_PATH}" ]; then
         pushd "${SUMDOG_TOOLS_PATH}" > /dev/null || return 
         sumdog_tools_cmd_prefix=''
-        if hash aws-env > /dev/null 2>&1; then
+        if command -v aws-env > /dev/null 2>&1; then
             sumdog_tools_cmd_prefix='aws-env'
         fi
         "${sumdog_tools_cmd_prefix}" bundle exec sd "$@"

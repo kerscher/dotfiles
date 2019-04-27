@@ -2,23 +2,23 @@
 
 # Available commands
 execute_if_exists() {
-    if hash "$1" 2>/dev/null; then
+    if command -v "$1" 2>/dev/null; then
         "$@"
     fi
 }
 
 monitor_processes() {
-    if hash htop 2>/dev/null; then
+    if command -v htop 2>/dev/null; then
         htop
-    elif hash top 2>/dev/null; then
+    elif command -v top 2>/dev/null; then
         top
     fi
 }
 
 list_tree() {
-    if hash tree 2>/dev/null; then
+    if command -v tree 2>/dev/null; then
         tree --dirsfirst -C -L 2 "$@"
-    elif hash exa 2>/dev/null; then
+    elif command -v exa 2>/dev/null; then
         exa --tree --group-directories-first --level 2  "$@"
     else
         ls                   \
@@ -31,9 +31,9 @@ list_tree() {
 }
 
 list_detailed_tree() {
-    if hash tree 2>/dev/null; then
+    if command -v tree 2>/dev/null; then
         tree --dirsfirst -a -C -L 2 -h -D -p -g "$@"
-    elif hash exa 2>/dev/null; then
+    elif command -v exa 2>/dev/null; then
         exa --all --tree --group-directories-first --level 2 "$@"
     else
         ls                   \
@@ -47,7 +47,7 @@ list_detailed_tree() {
 }
 
 list_files() {
-    if hash exa 2>/dev/null; then
+    if command -v exa 2>/dev/null; then
         exa \
             --header \
             --long \
@@ -63,7 +63,7 @@ list_files() {
 }
 
 list_all_files() {
-    if hash exa 2>/dev/null; then
+    if command -v exa 2>/dev/null; then
         exa \
             --header \
             --long \

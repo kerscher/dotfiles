@@ -1,7 +1,8 @@
 #!/bin/bash
 
 setup_haskell() {
-    if hash stack 2>/dev/null; then
+
+    if command -v stack 2>/dev/null; then
         if [ ! -f "${HOME}/.ghci" ]; then
             ln -s "${DOTFILES}/config/ghci" "${HOME}/.ghci"
         fi
