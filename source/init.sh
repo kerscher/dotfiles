@@ -17,7 +17,6 @@ else
 fi
 
 # Paths
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 export LOCAL_PATH="${HOME}/.local"
 mkdir --parents                  \
       "${LOCAL_PATH}"            \
@@ -27,7 +26,7 @@ mkdir --parents                  \
       "${LOCAL_PATH}/share/man"  \
       "${LOCAL_PATH}/share/info"
 export LOCAL_BIN="${LOCAL_PATH}/bin"
-export PATH=${LOCAL_BIN}:${PATH}
+export PATH="${LOCAL_BIN}:${PATH}"
 
 # Features
 load_feature() {
@@ -41,14 +40,14 @@ load_feature() {
 declare -a features=(
     "docker"
     "git"
-    "go"
-    "haskell"
-    "keychain"
-    "nix"
-    "python"
-    "ruby"
-    "rust"
-    "terraform"
+    #"go"
+    #"haskell"
+    #"keychain"
+    #"nix"
+    #"python"
+    #"ruby"
+    #"rust"
+    #"terraform"
 )
 for f in "${features[@]}"; do
     load_feature "${f}"
@@ -76,7 +75,7 @@ if [ -t 1 ]; then
     . "${DOTFILES}/text_editor.sh"
     export EDITOR && EDITOR=$(text_editor)
     export VISUAL && VISUAL=$(text_editor)
-
+    
     # Documentation
     if command -v man 2>/dev/null; then
         export LOCAL_MAN="${LOCAL_PATH}/share/man"
