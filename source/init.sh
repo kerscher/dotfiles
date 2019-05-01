@@ -3,7 +3,7 @@
 log_error() {
     if [ -t 1 ]; then
         echo "dotfiles: $*"
-    elif command -v logger 2>/dev/null; then
+    elif command -v logger> /dev/null 2>&1; then
         logger -t "dotfiles" "$*"
     fi
 }
@@ -77,11 +77,11 @@ if [ -t 1 ]; then
     export VISUAL && VISUAL=$(text_editor)
     
     # Documentation
-    if command -v man 2>/dev/null; then
+    if command -v man> /dev/null 2>&1; then
         export LOCAL_MAN="${LOCAL_PATH}/share/man"
         export MANPATH=$LOCAL_MAN:$MANPATH
     fi
-    if command -v info 2>/dev/null; then
+    if command -v info> /dev/null 2>&1; then
         export LOCAL_INFO="${LOCAL_PATH}/share/info"
         export INFOPATH=$LOCAL_INFO:$INFOPATH
     fi

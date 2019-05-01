@@ -6,7 +6,7 @@ setup_locate_user_data() {
         # shellcheck disable=SC2016
         log_error 'Ensure "${LOCAL_PATH}" exists and is set'
     else
-        if command -v locate 2>/dev/null; then
+        if command -v locate >/dev/null 2>&1; then
             LOCATE_BASE_PATH="${LOCAL_PATH}/share/locate-db"
             LOCATE_PATH="${LOCATE_BASE_PATH}/locate.db"
             if [ ! -d "${LOCATE_BASE_PATH}" ]; then

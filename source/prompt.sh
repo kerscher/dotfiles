@@ -2,7 +2,7 @@
 
 parse_virtualenv () {
     if [[ -n "${VIRTUAL_ENV}" ]]; then
-        if command -v basename 2>/dev/null; then
+        if command -v basename> /dev/null 2>&1; then
             VIRTUALENV_NAME=$(basename "$VIRTUAL_ENV")
         else
             VIRTUALENV_NAME="${VIRTUAL_ENV}"

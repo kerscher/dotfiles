@@ -1,7 +1,7 @@
 #!/bin/bash
 
 setup_git() {
-    if command -v git 2>/dev/null; then
+    if command -v git >/dev/null 2>&1; then
         if [ ! -f "${HOME}/.gitignore" ]; then
             ln -s "${DOTFILES}/config/gitignore" "${HOME}/.gitignore"
             git config --global core.excludesfile "${HOME}/.gitignore"
