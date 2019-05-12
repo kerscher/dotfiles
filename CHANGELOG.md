@@ -9,11 +9,12 @@
 
 #### Features
 
-*   Nix support ([53ad7912](53ad7912))
-* **Bootstrap:**  add `tilda` to Fedora ([861394e7](861394e7))
+*   add Nix support ([53ad7912](53ad7912))
 * **LSP:**  add language server protocol to bootstrap ([4c912d3f](4c912d3f))
 * **Ruby:**  re-enable automatic `rbenv` activation ([02b960c0](02b960c0))
-* **bootstrap:**  `gometalinter` is deprecated, use `golangci-lint` ([caa7622e](caa7622e))
+* **bootstrap:**
+  * add `tilda` to Fedora ([861394e7](861394e7))
+  * `gometalinter` is deprecated, use `golangci-lint` ([caa7622e](caa7622e))
 * **gitignore:**
   *  remove R and Sass ([bc3e3c39](bc3e3c39))
   *  ignore Terraform-related temporary files ([aac6f705](aac6f705))

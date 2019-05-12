@@ -54,9 +54,9 @@ if [[ -f /etc/lsb_release ]]; then
          "build-essential"
          "ca-certificates"
          "cmake"
+         "chromium-browser"
          "curl"
          "docker.io"
-         "emacs-snapshot"
          "git"
          "jq"
          "keychain"
@@ -77,7 +77,6 @@ if [[ -f /etc/lsb_release ]]; then
          "zbar-tools"
     )
 
-    sudo add-apt-repository ppa:ubuntu-elisp/ppa
     sudo apt update
     sudo apt dist-upgrade
     sudo apt install "${ubuntu_packages[@]}"
