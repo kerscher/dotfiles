@@ -58,6 +58,7 @@ declare -a features=(
     "asdf"
     "go"
     "terraform"
+    "packer"
     "haskell"
     "rust"
     "ruby"
