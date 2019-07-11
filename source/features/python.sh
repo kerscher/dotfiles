@@ -22,3 +22,23 @@ setup_python() {
 }
 
 setup_python
+
+install_python_tools() {
+    declare -a python_packages=(
+        "black"
+        "isort"
+        "mccabe"
+        "mypy"
+        "pycodestyle"
+        "pydocstyle"
+        "pyflakes"
+        "pygments"
+        "pyls-black"
+        "pyls-isort"
+        "pyls-mypy"
+        "python-language-server[all]"
+        "rope"
+    )
+    pip install --upgrade pip setuptools
+    pip install --upgrade "${python_packages[@]}"
+}

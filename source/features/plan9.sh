@@ -1,5 +1,13 @@
 #!/bin/bash
 
+install_plan9() {
+    sudo git clone https://github.com/9fans/plan9port /usr/local/plan9
+    sudo chown -R "${USER}:${USER}" /usr/local/plan9
+    pushd /usr/local/plan9
+    ./INSTALL
+    popd
+}
+
 setup_plan9() {
     PLAN9='/usr/local/plan9'
     if [[ -d "${PLAN9}" ]]; then

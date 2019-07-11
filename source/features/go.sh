@@ -23,3 +23,20 @@ setup_go() {
 }
 
 setup_go
+
+install_go_tools() {
+    declare -a go_packages=(
+        "astaxie/bat"
+        "golangci/golangci-lint/cmd/golangci-lint"
+        "jessfraz/dockfmt"
+        "liudng/dogo"
+        "mdempsky/gocode"
+        "mitchellh/gox"
+        "segmentio/terraform-docs"
+        "sourcegraph/go-langserver"
+        "svent/sift"
+    )
+    for t in "${go_packages[@]}"; do
+        go get -u "github.com/${t}"
+    done
+}

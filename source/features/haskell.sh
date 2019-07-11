@@ -26,3 +26,13 @@ setup_haskell() {
 }
 
 setup_haskell
+
+install_haskell_tools() {
+    declare -a haskell_packages=(
+        "hindent"
+        "pandoc"
+        "ShellCheck"
+        "hlint"
+    )
+    stack install "${haskell_packages[@]}"
+}

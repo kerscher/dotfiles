@@ -29,3 +29,15 @@ setup_rust() {
 }
 
 setup_rust
+
+install_rust_tools() {
+    declare -a rust_packages=(
+        "clog-cli"
+        "drill"
+        "funzzy"
+        "just"
+        "ripgrep"
+        "xsv"
+    )
+    cargo install "${rust_packages[@]}"
+}
