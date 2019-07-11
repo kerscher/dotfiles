@@ -1,3 +1,15 @@
+<a name="v1.0.0"></a>
+## v1.0.0 (2019-07-11)
+
+
+#### Features
+
+*   use unified status mechanism for boostrapping ([e4184646](e4184646))
+*   add `asdf` support and convert `*env` tools ([143b39b5](143b39b5))
+* **bootstrap:**  move lang-specific packages to their features ([870b2c5c](870b2c5c))
+
+
+
 <a name="0.1.0"></a>
 ## 0.1.0 (2019-04-24)
 
@@ -26,6 +38,3 @@
   *  use `aws-env` if available for `sumdog_tools` ([00769635](00769635))
   *  execute `sd` from `sumdog_tools` ([b0f5fe6a](b0f5fe6a))
 * **terraform:**  let environment decide `aws-env` profile ([ca302207](ca302207))
-
-
-
