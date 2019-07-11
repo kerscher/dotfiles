@@ -1,22 +1,25 @@
 #!/bin/bash
 
+: "${HOME?}"
+
+if ! test "$(type -t asdf_bootstrap = 'function')"
+then
+    log_error 'You need asdf_bootstrap to install Rust'
+    return
+fi
+
+GOLANG_DOTFILES_VERSION='1.12.7'
+
 setup_go() {
-    GOENV_ROOT="${HOME}/.goenv"
-    GOENV_PATH="${GOENV_ROOT}/bin"
+    asdf_bootstrap 'golang' "${GOLANG_DOTFILES_VERSION}"
+    
     GOPATH="${HOME}/go"
-    if [ -d "${GOENV_ROOT}" ]; then
-        export GOENV_ROOT="${GOENV_ROOT}"
-        if [ ! -d "${GOPATH}" ]; then
-            mkdir "${GOPATH}"
-            export GOPATH="${GOPATH}"
-        fi
-        export PATH=${GOENV_PATH}:${GOPATH}/bin:${PATH}
-        # shellcheck source=/dev/null
-        eval "$(goenv init -)"
-        DOTFILES_FEATURES="go ${DOTFILES_FEATURES}"
-    else
-        log_error "Go toolset error: \"${GOENV_ROOT}\" does not exist. Install from https://github.com/syndbg/goenv."
+    if [ ! -d "${GOPATH}" ]; then
+        mkdir "${GOPATH}"
+        export GOPATH="${GOPATH}"
     fi
+    export PATH=${GOPATH}/bin:${PATH}
+    DOTFILES_FEATURES="go ${DOTFILES_FEATURES}"
 }
 
 setup_go

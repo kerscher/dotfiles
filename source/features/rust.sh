@@ -1,11 +1,25 @@
 #!/bin/bash
 
+: "${HOME?}"
+: "${ASDF_HOME?}"
+
+if ! test "$(type -t asdf_bootstrap = 'function')"
+then
+    log_error 'You need asdf_bootstrap to install Rust'
+    return
+fi
+
+RUST_DOTFILES_VERSION='stable'
+export RUST_DOTFILES_VERSION
+
 setup_rust() {
-    CARGO_PATH="${HOME}/.cargo"
+    asdf_bootstrap 'rust' "${RUST_DOTFILES_VERSION}"
+    
+    CARGO_PATH="${ASDF_HOME}/installs/rust/${RUST_DOTFILES_VERSION}"
     RUST_PATH="${CARGO_PATH}/bin"
     if [ -d "${RUST_PATH}" ]; then
         export RUST_PATH=${RUST_PATH}
-        export PATH=${RUST_PATH}:${PATH}
+        export PATH="${HOME}/.cargo/bin:${RUST_PATH}:${PATH}"
         # shellcheck source=/dev/null
         . "${CARGO_PATH}/env" 1&>- 2>&1
         DOTFILES_FEATURES="rust ${DOTFILES_FEATURES}"

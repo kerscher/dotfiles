@@ -11,6 +11,7 @@ log_error() {
 if [ -z "${DOTFILES+1}" ]; then
     if [ -d "${HOME}/.dotfiles" ]; then
         DOTFILES="${HOME}/.dotfiles"
+        export DOTFILES
     fi
 else
     log_error "Dotfiles error: couldn't find source. To fix: ln -s <dotfiles-repo-location>/source ${HOME}/.dotfiles"
@@ -41,14 +42,14 @@ load_feature() {
 declare -a features=(
     "docker"
     "git"
+    "asdf"
     "go"
-    "haskell"
-    "keychain"
-    "nix"
-    "python"
-    "ruby"
-    "rust"
     "terraform"
+    "haskell"
+    "rust"
+    "ruby"
+    "python"
+    "javascript"
 )
 for f in "${features[@]}"; do
     load_feature "${f}"
@@ -56,59 +57,15 @@ done
 
 # Is this a terminal?
 if [ -t 1 ]; then
-    # Update terminal size after each command
-    shopt -s checkwinsize
-
-    # History
-    export HISTCONTROL="ignoreboth:erasedups"
-    shopt -s histappend
-    shopt -s extglob
-    HISTSIZE=1000
-    HISTFILESIZE=2000
-    alias history_fix='history -n && history -w && history -c && history -r'
-    PROMPT_COMMAND="history_fix; $PROMPT_COMMAND"
-
-    # Pager preprocessor
-    [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-    # Text editor
-    # shellcheck source=/scripts/source/text_editor.sh
-    . "${DOTFILES}/text_editor.sh"
-    export EDITOR && EDITOR=$(text_editor)
-    export VISUAL && VISUAL=$(text_editor)
-
-    # Documentation
-    if hash man 2>/dev/null; then
-        export LOCAL_MAN="${LOCAL_PATH}/share/man"
-        export MANPATH=$LOCAL_MAN:$MANPATH
-    fi
-    if hash info 2>/dev/null; then
-        export LOCAL_INFO="${LOCAL_PATH}/share/info"
-        export INFOPATH=$LOCAL_INFO:$INFOPATH
-    fi
-
-    # Keyboard navigation
-    # shellcheck source=/scripts/source/directory-navigation.sh
-    . "${DOTFILES}/directory-navigation.sh"
-    # shellcheck source=/scripts/source/keyboard-shortcuts.sh
-    . "${DOTFILES}/keyboard-shortcuts.sh"
-    if [ ! -f "${HOME}/.inputrc" ]; then
-        ln -s "${DOTFILES}/config/inputrc" "${HOME}/.inputrc"
-    fi
-    export INPUTRC=${HOME}/.inputrc
-
-    # Prompt
-    # shellcheck source=/scripts/source/prompt.sh
-    . "${DOTFILES}/prompt.sh"
-
-    # Completions
-    if ! shopt -oq posix; then
-        if [ -f /usr/share/bash-completion/bash_completion ]; then
-            # shellcheck source=/dev/null
-            . /usr/share/bash-completion/bash_completion
-        elif [ -f /etc/bash_completion ]; then
-            # shellcheck source=/dev/null
-            . /etc/bash_completion
-        fi
-    fi
+    declare -a interactive_features=(
+        "history-control"
+        "text-editor"
+        "documentation"
+        "keyboard-navigation"
+        "prompt"
+        "completions"
+    )
+    for f in "${interactive_features[@]}"; do
+        load_feature "${f}"
+    done
 fi

@@ -1,17 +1,24 @@
 #!/bin/bash
 
+: "${HOME?}"
+: "${DOTFILES?}"
+
+if ! test "$(type -t asdf_bootstrap = 'function')"
+then
+    log_error 'You need asdf_bootstrap to install Rust'
+    return
+fi
+
+PYTHON_DOTFILES_VERSION='3.7.4'
+
 setup_python() {
-    PYENV_PATH="${HOME}/.pyenv/bin"
-    if [ -d "${PYENV_PATH}" ]; then
-        export PYENV_PATH="${PYENV_PATH}"
-        export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-        export PATH="${PYENV_PATH}:${PATH}"
-        eval "$(pyenv init -)"
-        eval "$(pyenv virtualenv-init -)"
-        DOTFILES_FEATURES="python ${DOTFILES_FEATURES}"
-    else
-        log_error "Python toolset error: \"${PYENV_PATH}\" does not exist. Reinstall pyenv and try again."
+    local DEFAULT_PYTHON_PACKAGES="${HOME}/.default-python-packages"
+    if [ ! -f "${DEFAULT_PYTHON_PACKAGES}" ]
+    then
+        ln -s "${DOTFILES}/config/default-python-packages" "${DEFAULT_PYTHON_PACKAGES}"
     fi
+    asdf_bootstrap 'python' "${PYTHON_DOTFILES_VERSION}"
+    DOTFILES_FEATURES="python ${DOTFILES_FEATURES}"
 }
 
 setup_python

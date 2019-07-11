@@ -1,6 +1,17 @@
 #!/bin/bash
 
-# Available commands
+: "${DOTFILES?}"
+
+set -B
+
+change_directory() {
+    if hash cdargs 2>/dev/null; then
+        cdargs "$1" && pushd "$(cat "$HOME/.cdargsresult")" || exit
+    else
+        log_error "Error: cdargs is not on PATH. Ensure it's installed and try again."
+    fi
+}
+
 execute_if_exists() {
     if hash "$1" 2>/dev/null; then
         "$@"
@@ -111,3 +122,8 @@ alias r="popd -1"  # go to first directory on history deleting the current one f
 
 alias s="execute_if_exists locate" # search globally for files
 alias S="execute_if_exists find"   # search locally  for files
+
+if [ ! -f "${HOME}/.inputrc" ]; then
+    ln -s "${DOTFILES}/config/inputrc" "${HOME}/.inputrc"
+fi
+export INPUTRC=${HOME}/.inputrc

@@ -1,29 +1,6 @@
 #!/bin/bash
 
-parse_virtualenv () {
-    if [[ -n "${VIRTUAL_ENV}" ]]; then
-        if hash basename 2>/dev/null; then
-            VIRTUALENV_NAME=$(basename "$VIRTUAL_ENV")
-        else
-            VIRTUALENV_NAME="${VIRTUAL_ENV}"
-        fi
-        echo "${VIRTUALENV_NAME} "
-    fi
-}
-
-parse_os () {
-    OS_REDHAT=$(cat /etc/redhat-release 2> /dev/null)
-    OS_DEBIAN=$(lsb_release -a 2> /dev/null | grep 'Description:' | cut -d: -f2 | awk '{ print $1, $2, $3 }')
-    if [ ! -z "${OS_REDHAT}" ]; then
-        echo "${OS_REDHAT} "
-    elif [ ! -z "${OS_DEBIAN}" ]; then
-        echo "${OS_DEBIAN} "
-    else
-        echo ""
-    fi
-    unset OS_REDHAT
-    unset OS_DEBIAN
-}
+shopt -s checkwinsize
 
 export last_timestamp_file
 last_timestamp_file="$(mktemp)"

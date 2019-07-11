@@ -1,5 +1,22 @@
 #!/bin/bash
 
+: "${HOME?}"
+: "${DOTFILES_FEATURES?}"
+
+if ! test "$(type -t asdf_bootstrap = 'function')"
+then
+    log_error 'You need asdf_bootstrap to install Rust'
+    return
+fi
+
+RUBY_DOTFILES_VERSION='2.6.3'
+
+setup_ruby() {
+    asdf_bootstrap 'ruby' "${RUBY_DOTFILES_VERSION}"
+}
+
+setup_ruby
+
 sumdog_tools() {
     if [ -n "${SUMDOG_TOOLS_PATH}" ]; then
         pushd "${SUMDOG_TOOLS_PATH}" > /dev/null || return 
@@ -9,21 +26,8 @@ sumdog_tools() {
         fi
         "${sumdog_tools_cmd_prefix}" bundle exec sd "$@"
         popd > /dev/null || return
+        DOTFILES_FEATURES="ruby ${DOTFILES_FEATURES}"
     else
         log_error "SUMDOG_TOOLS_PATH not set. Export it with an absolute path."
     fi
 }
-
-setup_ruby() {
-    RBENV_PATH="${HOME}/.rbenv/bin"
-    if [ -d "${RBENV_PATH}" ]; then
-        export RBENV_PATH="${RBENV_PATH}"
-        export PATH=${RBENV_PATH}:${PATH}
-        eval "$(rbenv init -)"
-        DOTFILES_FEATURES="ruby ${DOTFILES_FEATURES}"
-    else
-        log_error "Ruby toolset error: \"${RBENV_PATH}\" does not exist. Reinstall rbenv and try again."
-    fi
-}
-
-setup_ruby

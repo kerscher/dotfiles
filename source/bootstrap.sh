@@ -6,86 +6,103 @@ set -o pipefail
 
 if [[ -f /etc/redhat-release ]]; then
     declare -a fedora_packages=(
-         "bzip2-devel"
-         "bzip2-devel"
-         "ca-certificates"
-         "cmake"
-         "curl"
-         "dnf-plugins-core"
-         "emacs"
-         "fontconfig-devel"
-         "freetype-devel"
-         "git"
-         "jq"
-         "keychain"
-         "libXext-devel"
-         "libXt-devel"
-         "libffi-devel"
-         "libicu-devel"
-         "lzma-devel"
-         "lzma-devel"
-         "monkeysphere"
-         "ncurses-compat-libs"
-         "oathtool"
-         "openssl-devel"
-         "pass"
-         "pass-otp"
-         "qrencode"
-         "qtpass"
-         "readline-devel"
-         "readline-devel"
-         "sqlite-devel"
-         "tilda"
-         "xorg-x11-server-devel"
-         "zbar"
+        "autoconf"
+        "automake"
+        "bzip2-devel"
+        "bzip2-devel"
+        "ca-certificates"
+        "cmake"
+        "curl"
+        "curl"
+        "dnf-plugins-core"
+        "emacs"
+        "fontconfig-devel"
+        "freetype-devel"
+        "git"
+        "jq"
+        "keychain"
+        "libXext-devel"
+        "libXt-devel"
+        "libffi-devel"
+        "libffi-devel"
+        "libicu-devel"
+        "libtool"
+        "libxslt-devel"
+        "libyaml-devel"
+        "lzma-devel"
+        "lzma-devel"
+        "monkeysphere"
+        "ncurses-compat-libs"
+        "ncurses-devel"
+        "oathtool"
+        "openssl-devel"
+        "openssl-devel"
+        "pass"
+        "pass-otp"
+        "qrencode"
+        "qtpass"
+        "readline-devel"
+        "readline-devel"
+        "readline-devel"
+        "sqlite-devel"
+        "tilda"
+        "unixODBC-devel"
+        "unzip"
+        "xorg-x11-server-devel"
+        "zbar"
     )
-
     sudo dnf install "${fedora_packages[@]}"
-
     sudo dnf config-manager \
          --add-repo \
          https://download.docker.com/linux/fedora/docker-ce.repo
-
     sudo dnf install docker-ce
 fi
 
 if [[ -f /etc/lsb_release ]]; then
     declare -a ubuntu_packages=(
-         "build-essential"
-         "ca-certificates"
-         "cmake"
-         "curl"
-         "docker.io"
-         "emacs-snapshot"
-         "git"
-         "jq"
-         "keychain"
-         "libbz2-dev"
-         "libicu-dev"
-         "libreadline-dev"
-         "libsqlite3-dev"
-         "libssl-dev"
-         "libtinfo-dev"
-         "lzma"
-         "monkeysphere"
-         "ninja-build"
-         "oathtool"
-         "pass"
-         "qrencode"
-         "tree"
-         "xorg-dev"
-         "zbar-tools"
+        "autoconf"
+        "automake"
+        "build-essential"
+        "ca-certificates"
+        "cmake"
+        "curl"
+        "curl"
+        "docker.io"
+        "emacs-snapshot"
+        "git"
+        "jq"
+        "keychain"
+        "libbz2-dev"
+        "libffi-dev"
+        "libicu-dev"
+        "libncurses-dev"
+        "libreadline-dev"
+        "libreadline-dev"
+        "libsqlite3-dev"
+        "libssl-dev"
+        "libssl-dev"
+        "libtinfo-dev"
+        "libtool"
+        "libxslt-dev"
+        "libyaml-dev"
+        "lzma"
+        "monkeysphere"
+        "ninja-build"
+        "oathtool"
+        "pass"
+        "qrencode"
+        "tree"
+        "unixodbc-dev"
+        "unzip"
+        "xorg-dev"
+        "zbar-tools"
     )
-
     sudo add-apt-repository ppa:ubuntu-elisp/ppa
     sudo apt update
     sudo apt dist-upgrade
     sudo apt install "${ubuntu_packages[@]}"
 fi
 
-curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-git clone https://github.com/kamatama41/tfenv.git ~/.tfenv
-git clone https://github.com/syndbg/goenv.git ~/.goenv
 curl https://sh.rustup.rs -sSf | sh
 curl -sSL https://get.haskellstack.org/ | sh
 
@@ -121,7 +138,6 @@ install_rust_tools() {
         "ripgrep"
         "xsv"
     )
-
     cargo install "${rust_packages[@]}"
 }
 
@@ -132,7 +148,6 @@ install_haskell_tools() {
         "ShellCheck"
         "hlint"
     )
-
     stack install "${haskell_packages[@]}"
 }
 
@@ -152,7 +167,6 @@ install_python_tools() {
         "python-language-server[all]"
         "rope"
     )
-
     pip install --upgrade pip setuptools
     pip install --upgrade "${python_packages[@]}"
 }

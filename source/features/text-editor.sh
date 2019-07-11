@@ -12,3 +12,6 @@ text_editor() {
         echo "vi"
     fi
 }
+
+export EDITOR && EDITOR=$(text_editor)
+export VISUAL && VISUAL=$(text_editor)

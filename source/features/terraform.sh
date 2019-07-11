@@ -1,23 +1,25 @@
 #!/bin/bash
 
-setup_terraform() {
-    TFENV_ROOT="${HOME}/.tfenv"
-    TFENV_PATH="${TFENV_ROOT}/bin"
-    if [ -d "${TFENV_ROOT}" ]; then
-        export PATH=${TFENV_PATH}:${PATH}
+TERRAFORM_DOTFILES_VERSION='0.11.14'
 
+setup_terraform() {
+    asdf_bootstrap 'terraform' "${TERRAFORM_DOTFILES_VERSION}"
+
+    if hash aws-env 2> /dev/null
+    then
         tf() { aws-env terraform "$@"; };
 
-        tf_feedback() {
-            while sleep 1
-            do
-                find . -maxdepth 1 -iname '*.tf' \
-                    | entr -c -d bash -c \
-                           'aws-env -p default terraform init && aws-env -p default terraform validate'
-            done
-        }
-    else
-        log_error "Terraform toolset error: \"${TFENV_ROOT}\" does not exist. Install from https://github.com/kamatama41/tfenv."
+        if hash entr 2> /dev/null
+        then
+            tf_feedback() {
+                while sleep 1
+                do
+                    find . -maxdepth 1 -iname '*.tf' \
+                        | entr -c -d bash -c \
+                               'aws-env -p default terraform init && aws-env -p default terraform validate'
+                done
+            }
+        fi
     fi
 }
 
