@@ -13,7 +13,7 @@ fi
 NODEJS_DOTFILES_VERSION='12.6.0'
 
 setup_javascript() {
-    local NODEJS_KEYRING_IMPORTED="${DOTFILES}/nodejs-keyring-imported"
+    local NODEJS_KEYRING_IMPORTED="${DOTFILES}/status/nodejs-keyring-imported"
     if [ ! -f "${NODEJS_KEYRING_IMPORTED}" ]
     then
         NODEJS_PLUGIN_IMPORT="${ASDF_HOME}/plugins/nodejs/bin/import-release-team-keyring"
@@ -57,6 +57,7 @@ setup_javascript() {
         fi
     fi
     asdf_bootstrap 'nodejs' "${NODEJS_DOTFILES_VERSION}"
+    DOTFILES_FEATURES="javascript ${DOTFILES_FEATURES}"
 }
 
 setup_javascript

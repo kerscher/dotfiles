@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! test "$(type -t asdf_bootstrap = 'function')"
+then
+    log_error 'You need asdf_bootstrap to install Rust'
+    return
+fi
+
 TERRAFORM_DOTFILES_VERSION='0.11.14'
 
 setup_terraform() {
@@ -21,6 +27,7 @@ setup_terraform() {
             }
         fi
     fi
+    DOTFILES_FEATURES="terraform ${DOTFILES_FEATURES}"
 }
 
 setup_terraform

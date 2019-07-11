@@ -36,6 +36,7 @@ else
     echo "Error: could not add completions for asdf. Ensure ${ASDF_COMPLETIONS} exists and is readable"
 fi
 unset ASDF_COMPLETIONS
+DOTFILES_FEATURES="asdf ${DOTFILES_FEATURES}"
 
 asdf_bootstrap() {
     : "${1?Provide plugin for asdf as first argument}"
