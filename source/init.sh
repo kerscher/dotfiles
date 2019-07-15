@@ -8,19 +8,17 @@ log_error() {
     fi
 }
 
-if [ -z "${DOTFILES+1}" ]
+if [ -z "${HOME}" ] || [ -z "${BASH_SOURCE}" ]
 then
-    if [ -d "${HOME}/.dotfiles" ]
-    then
-        DOTFILES="${HOME}/.dotfiles"
-        export DOTFILES
-    fi
-    DOTFILES_STATUS="${DOTFILES}/status"
-    if [ ! -d "${DOTFILES_STATUS}" ]
-    then mkdir "${DOTFILES_STATUS}"
-    fi
-else
-    log_error "Dotfiles error: couldn't find source. To fix: ln -s <dotfiles-repo-location>/source ${HOME}/.dotfiles"
+    log_error "You need to set HOME and allow BASH_SOURCE to find dotfiles before proceeding"
+    return
+fi
+
+DOTFILES="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null 2>&1 && pwd )"
+DOTFILES_STATUS="${DOTFILES}/status"
+export DOTFILES DOTFILES_STATUS
+if [ ! -d "${DOTFILES_STATUS}" ]
+then mkdir "${DOTFILES_STATUS}"
 fi
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
