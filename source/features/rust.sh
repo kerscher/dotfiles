@@ -19,7 +19,7 @@ setup_rust() {
     RUST_PATH="${CARGO_PATH}/bin"
     if [ -d "${RUST_PATH}" ]; then
         export RUST_PATH=${RUST_PATH}
-        export PATH="${HOME}/.cargo/bin:${RUST_PATH}:${PATH}"
+        export PATH="${HOME}/.cargo/bin:${PATH}"
         # shellcheck source=/dev/null
         . "${CARGO_PATH}/env" 1&>- 2>&1
         DOTFILES_FEATURES="rust ${DOTFILES_FEATURES}"
