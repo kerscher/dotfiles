@@ -1,5 +1,6 @@
 #!/bin/bash
 
+: "${ASDF_HOME?}"
 : "${HOME?}"
 : "${DOTFILES?}"
 
@@ -19,6 +20,7 @@ setup_haskell() {
             ln -s "${DOTFILES}/config/ghci" "${HOME}/.ghci"
             chmod go-w "${HOME}/.ghci"
         fi
+        export PATH="${ASDF_HOME}/installs/haskell/${HASKELL_DOTFILES_VERSION}/bin:${PATH}"
         DOTFILES_FEATURES="haskell ${DOTFILES_FEATURES}"
     else
         log_error "Haskell toolset error: reinstall stack with asdf_bootstrap and try again."
