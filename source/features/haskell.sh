@@ -6,7 +6,7 @@
 
 if ! test "$(type -t asdf_bootstrap = 'function')"
 then
-    log_error 'You need asdf_bootstrap to install Rust'
+    log_error 'You need asdf_bootstrap to install Haskell'
     return
 fi
 
