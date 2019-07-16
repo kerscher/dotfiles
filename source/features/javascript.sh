@@ -48,6 +48,7 @@ setup_javascript() {
                 for server in ${SERVERS}; do
                     gpg --no-tty \
                         --keyserver "hkp://$server" \
+                        \ # shellcheck disable=SC2086
                         ${OPTIONS} \
                         --display-charset utf-8 \
                         --recv-keys "${key}" \

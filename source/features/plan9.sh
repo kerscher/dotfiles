@@ -3,9 +3,9 @@
 install_plan9() {
     sudo git clone https://github.com/9fans/plan9port /usr/local/plan9
     sudo chown -R "${USER}:${USER}" /usr/local/plan9
-    pushd /usr/local/plan9
+    pushd /usr/local/plan9 || return
     ./INSTALL
-    popd
+    popd || { log_error 'Can'\''t exit Plan 9 installation folder'; return ; } ;
 }
 
 setup_plan9() {

@@ -6,7 +6,7 @@ text_editor() {
         echo "emacsclient --create-frame --alternate-editor=${EDITOR}"
     elif hash mg 2>/dev/null; then
         echo "mg"
-    elif [ ! -z "${EDITOR}" ]; then
+    elif [ -n "${EDITOR}" ]; then
         echo "${EDITOR}"
     else
         echo "vi"

@@ -8,7 +8,7 @@ log_error() {
     fi
 }
 
-if [ -z "${HOME}" ] || [ -z "${BASH_SOURCE}" ]
+if [ -z "${HOME}" ] || [ -z "${BASH_SOURCE[*]}" ]
 then
     log_error "You need to set HOME and allow BASH_SOURCE to find dotfiles before proceeding"
     return

@@ -13,15 +13,15 @@ then
         return
     fi
     git clone https://github.com/asdf-vm/asdf.git "${ASDF_HOME}"
-    pushd "${ASDF_HOME}"
+    pushd "${ASDF_HOME}" || return
     git checkout "$(git describe --abbrev=0 --tags)"
-    asdf update
-    popd
+    asdf update || { log_error 'Can'\''t exit ASDF installation folder'; return ; } ;
 fi
 
 ASDF_INIT="${ASDF_HOME}/asdf.sh"
 if [ -r "${ASDF_INIT}" ]
 then
+    # shellcheck source=/dev/null
     . "${ASDF_INIT}"
 else
     echo "Error: could not initialise asdf. Ensure ${ASDF_INIT} exists and is readable"
@@ -31,6 +31,7 @@ unset ASDF_INIT
 ASDF_COMPLETIONS="${ASDF_HOME}/completions/asdf.bash"
 if [ -r "${ASDF_COMPLETIONS}" ]
 then
+    # shellcheck source=/dev/null
     . "${ASDF_COMPLETIONS}"
 else
     echo "Error: could not add completions for asdf. Ensure ${ASDF_COMPLETIONS} exists and is readable"
