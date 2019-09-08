@@ -10,7 +10,7 @@ then
     return
 fi
 
-HASKELL_DOTFILES_VERSION='8.6.5'
+HASKELL_DOTFILES_VERSION='8.8.1'
 
 setup_haskell() {
     asdf_bootstrap 'haskell' "${HASKELL_DOTFILES_VERSION}"
