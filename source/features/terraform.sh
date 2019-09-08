@@ -6,7 +6,7 @@ then
     return
 fi
 
-TERRAFORM_DOTFILES_VERSION='0.11.14'
+TERRAFORM_DOTFILES_VERSION='0.12.8'
 
 setup_terraform() {
     asdf_bootstrap 'terraform' "${TERRAFORM_DOTFILES_VERSION}"
