@@ -23,7 +23,7 @@ fi
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
 export LOCAL_PATH="${HOME}/.local"
-mkdir --parents                  \
+mkdir -p                         \
       "${LOCAL_PATH}"            \
       "${LOCAL_PATH}/lib"        \
       "${LOCAL_PATH}/bin"        \
