@@ -63,6 +63,7 @@ declare -a features=(
     "ruby"
     "python"
     "javascript"
+    "macos"
 )
 for f in "${features[@]}"
 do load_feature "${f}"
