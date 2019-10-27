@@ -44,7 +44,7 @@ if [ -t 1 ]; then
         W=$(tput setaf 7) # White
 
         export PS1
-        PS1="\\n\\[${N}${B}\\]\\t \\[${N}${B}\\]+\`seconds_since_last_command\` \\[${H}${W}\\]\\w\\n\$ \\[${N}${W}\\]"
+        PS1="\\n\\[${N}${B}\\]\\t \\[${H}${W}\\]\\w\\n\$ \\[${N}${W}\\]"
         #unset B
         unset BL
         #unset R
@@ -56,6 +56,6 @@ if [ -t 1 ]; then
         unset W
     else
         #export PS1="\n\t \u @ \h \`parse_os\`\`parse_virtualenv\`\w\n\$ "
-        export PS1="\\n\\t\`parse_virtualenv\`\\w\\n\$ "
+        export PS1="\\n\\t \\w\\n\$ "
     fi
 fi
