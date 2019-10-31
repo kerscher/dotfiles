@@ -1,3 +1,15 @@
 ansible
 awscli
+black
+mccabe
+mypy
 pipenv
+pycodestyle
+pydocstyle
+pyflakes
+pygments
+pyls-black
+pyls-isort
+pyls-mypy
+python-language-server[all]
+rope
