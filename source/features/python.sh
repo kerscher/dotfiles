@@ -2,6 +2,7 @@
 
 : "${HOME?}"
 : "${DOTFILES?}"
+: "${ASDF_HOME?}"
 
 if ! test "$(type -t asdf_bootstrap = 'function')"
 then
@@ -18,6 +19,13 @@ setup_python() {
         ln -s "${DOTFILES}/config/default-python-packages" "${DEFAULT_PYTHON_PACKAGES}"
     fi
     asdf_bootstrap 'python' "${PYTHON_DOTFILES_VERSION}"
+    PYTHON_BIN_PATH="${ASDF_HOME}/installs/python/${PYTHON_DOTFILES_VERSION}/bin"
+    if [ -d "${PYTHON_BIN_PATH}" ]
+    then
+        export PYTHON_BIN_PATH
+        export PATH="${PYTHON_BIN_PATH}:${PATH}"
+    else log_error "Could not add Python ${PYTHON_DOTFILES_VERSION} to path."
+    fi
     DOTFILES_FEATURES="python ${DOTFILES_FEATURES}"
 }
 
