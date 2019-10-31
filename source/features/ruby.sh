@@ -9,7 +9,7 @@ then
     return
 fi
 
-RUBY_DOTFILES_VERSION='2.6.3'
+RUBY_DOTFILES_VERSION='2.6.5'
 
 setup_ruby() {
     asdf_bootstrap 'ruby' "${RUBY_DOTFILES_VERSION}"
