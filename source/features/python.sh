@@ -33,6 +33,8 @@ setup_python
 
 install_python_tools() {
     declare -a python_packages=(
+        "ansible"
+        "awscli"
         "black"
         "isort"
         "mccabe"
