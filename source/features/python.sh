@@ -48,6 +48,7 @@ install_python_tools() {
         "pyls-mypy"
         "python-language-server[all]"
         "rope"
+        "yamllint"
     )
     pip install --upgrade pip setuptools
     pip install --upgrade "${python_packages[@]}"

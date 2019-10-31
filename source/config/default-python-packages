@@ -13,3 +13,4 @@ pyls-isort
 pyls-mypy
 python-language-server[all]
 rope
+yamllint
