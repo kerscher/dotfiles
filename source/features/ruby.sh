@@ -24,3 +24,15 @@ setup_ruby() {
 }
 
 setup_ruby
+
+install_ruby_tools() {
+    declare -a ruby_packages=(
+        'test-kitchen'
+        'kitchen-ansible'
+        'kitchen-docker'
+        'kitchen-vagrant'
+        'kitchen-inspec'
+        'inspec-bin'
+    )
+    gem install "${ruby_packages[@]}"
+}
