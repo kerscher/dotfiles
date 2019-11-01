@@ -53,3 +53,22 @@ install_python_tools() {
     pip install --upgrade pip setuptools
     pip install --upgrade "${python_packages[@]}"
 }
+
+ansible_decrypt_variable() {
+    if [ -z "${1}" ] || [ -z "${2}" ]
+    then
+        printf '[ERROR] Invalid or missing arguments\n\tUsage: ansible_decrypt_variable variable_name file_to_decrypt\n'
+        return 1
+    fi
+    local variable_name="${1}"
+    local file_to_decrypt="${2}"
+    if [ "${ANSIBLE_VAULT_PASSWORD_FILE}" ]
+    then ask_vault_pass=""
+    else ask_vault_pass="--ask-vault-pass"
+    fi
+    ansible localhost \
+            -m debug \
+            -a "var=${variable_name}" \
+            -e @"${file_to_decrypt}" \
+            "${ask_vault_pass}"
+}
