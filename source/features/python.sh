@@ -31,7 +31,7 @@ setup_python() {
 
 setup_python
 
-oinstall_python_tools() {
+install_python_tools() {
     declare -a python_packages=(
         'ansible'
         'awscli'
