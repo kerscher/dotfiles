@@ -63,6 +63,7 @@ declare -a features=(
     "ruby"
     "python"
     "javascript"
+    "java"
     "macos"
 )
 for f in "${features[@]}"
