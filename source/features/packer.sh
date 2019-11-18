@@ -6,7 +6,7 @@ then
     return
 fi
 
-PACKER_DOTFILES_VERSION='1.4.0'
+PACKER_DOTFILES_VERSION='1.4.5'
 
 setup_packer() {
     asdf_bootstrap 'packer' "${PACKER_DOTFILES_VERSION}"
