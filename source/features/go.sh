@@ -9,7 +9,7 @@ then
     return
 fi
 
-GOLANG_DOTFILES_VERSION='1.13'
+GOLANG_DOTFILES_VERSION='1.13.4'
 
 setup_go() {
     asdf_bootstrap 'golang' "${GOLANG_DOTFILES_VERSION}"
