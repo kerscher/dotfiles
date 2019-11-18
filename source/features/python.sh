@@ -10,7 +10,7 @@ then
     return
 fi
 
-PYTHON_DOTFILES_VERSION='3.7.4'
+PYTHON_DOTFILES_VERSION='3.7.5'
 
 setup_python() {
     local DEFAULT_PYTHON_PACKAGES="${HOME}/.default-python-packages"
