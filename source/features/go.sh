@@ -20,6 +20,9 @@ setup_go() {
     GO111MODULE='on'
     export GOPATH GOROOT GO111MODULE
 
+    GOPATH_BIN="${GOPATH}/bin"
+    [ -d "${GOPATH_BIN}" ] && export PATH="${GOPATH_BIN}:${PATH}"
+
     DOTFILES_FEATURES="go ${DOTFILES_FEATURES}"
 }
 
