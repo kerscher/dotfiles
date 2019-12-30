@@ -43,4 +43,5 @@ install_go_tools() {
     for t in "${go_github_packages[@]}"; do
         go get -u "github.com/${t}"
     done
+    go get -u 'golang.org/x/tools/cmd/goimports'
 }
