@@ -39,5 +39,5 @@ install_rust_tools() {
         "ripgrep"
         "xsv"
     )
-    cargo install "${rust_packages[@]}"
+    cargo install --force "${rust_packages[@]}"
 }
