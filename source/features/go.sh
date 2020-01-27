@@ -29,19 +29,22 @@ setup_go() {
 setup_go
 
 install_go_tools() {
-    declare -a go_github_packages=(
-        "astaxie/bat"
-        "golangci/golangci-lint/cmd/golangci-lint"
-        "jessfraz/dockfmt"
-        "liudng/dogo"
-        "mdempsky/gocode"
-        "mitchellh/gox"
-        "segmentio/terraform-docs"
-        "sourcegraph/go-langserver"
-        "svent/sift"
+    local -a go_packages=(
+        "github.com/astaxie/bat"
+        "github.com/golangci/golangci-lint/cmd/golangci-lint"
+        "github.com/jessfraz/dockfmt"
+        "github.com/liudng/dogo"
+        "github.com/mdempsky/gocode"
+        "github.com/mitchellh/gox"
+        "github.com/segmentio/terraform-docs"
+        "github.com/sourcegraph/go-langserver"
+        "github.com/svent/sift"
+        "golang.org/x/tools/cmd/godoc"
+        "golang.org/x/tools/cmd/goimports"
+        "golang.org/x/tools/cmd/gorename"
+        "golang.org/x/tools/gopls@latest"
     )
-    for t in "${go_github_packages[@]}"; do
-        go get -u "github.com/${t}"
+    for t in "${go_packages[@]}"
+    do go get -u "${t}"
     done
-    go get -u 'golang.org/x/tools/cmd/goimports'
 }
