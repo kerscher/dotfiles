@@ -62,3 +62,16 @@ setup_javascript() {
 }
 
 setup_javascript
+
+install_javascript_tools() {
+    local -a javascript_packages=(
+        'typescript'
+        'typescript-language-server'
+        'yaml-language-server'
+        'dockerfile-language-server-nodejs'
+        'bash-language-server'
+    )
+    for p in "${javascript_packages[@]}"
+    do npm i -g "${p}"
+    done
+}
