@@ -5,6 +5,10 @@ setup_macOS() {
     then
         export BASH_SILENCE_DEPRECATION_WARNING=1
     fi
+    DOTFILES_MACTEX_PATH='/Library/Tex/texbin'
+    if [ -d "${DOTFILES_MACTEX_PATH}" ]
+    then export PATH="${DOTFILES_MACTEX_PATH}:${PATH}"
+    fi
 }
 
 setup_macOS
